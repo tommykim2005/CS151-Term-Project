@@ -21,8 +21,6 @@ import java.util.List;
 
 public class DefineLanguagesApp extends Application {
     private TextField nameField = new TextField();
-    private ComboBox<String> levelField = new ComboBox<>();
-    private ComboBox<String> typeField = new ComboBox<>();
     private TextArea notesField = new TextArea();
 
     private TableView<Language> table = new TableView<>();
@@ -43,22 +41,12 @@ public class DefineLanguagesApp extends Application {
         topBar.getItems().addAll(title, spacer, loadBtn, saveBtn, exitBtn);
 
         // Form
-        levelField.setItems(FXCollections.observableArrayList("Beginner", "Intermediate", "Advanced"));
-        typeField.setItems(FXCollections.observableArrayList("Programming", "Scripting", "Markup", "Other"));
-        notesField.setPromptText("Optional notes");
         notesField.setPrefRowCount(3);
-
         GridPane form = new GridPane();
         form.setHgap(10);
         form.setVgap(10);
         form.add(new Label("Language Name:"), 0, 0);
         form.add(nameField, 1, 0);
-        form.add(new Label("Level:"), 0, 1);
-        form.add(levelField, 1, 1);
-        form.add(new Label("Type:"), 0, 2);
-        form.add(typeField, 1, 2);
-        form.add(new Label("Notes:"), 0, 3);
-        form.add(notesField, 1, 3);
         ColumnConstraints c1 = new ColumnConstraints();
         c1.setPercentWidth(25);
         ColumnConstraints c2 = new ColumnConstraints();
@@ -76,15 +64,7 @@ public class DefineLanguagesApp extends Application {
         nameCol.setCellValueFactory(c -> c.getValue().name);
         nameCol.setPrefWidth(250);
 
-        TableColumn<Language, String> levelCol = new TableColumn<>("Level");
-        levelCol.setCellValueFactory(c -> c.getValue().level);
-        levelCol.setPrefWidth(160);
-
-        TableColumn<Language, String> typeCol = new TableColumn<>("Type");
-        typeCol.setCellValueFactory(c -> c.getValue().type);
-        typeCol.setPrefWidth(160);
-
-        table.getColumns().addAll(nameCol, levelCol, typeCol);
+        table.getColumns().addAll(nameCol);
         table.setItems(data);
         table.setPrefHeight(360);
 
@@ -109,10 +89,6 @@ public class DefineLanguagesApp extends Application {
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
             if (sel == null) return;
             nameField.setText(sel.name.get());
-            levelField.setValue(emptyToNull(sel.level.get()));
-            typeField.setValue(emptyToNull(sel.type.get()));
-            // notes stored but not shown in table
-            notesField.setText(sel.notes.get());
         });
 
         stage.setScene(new Scene(root, 800, 540));
@@ -126,17 +102,13 @@ public class DefineLanguagesApp extends Application {
             info("Validation", "Language name is required.");
             return;
         }
-        data.add(new Language(
-                name,
-                trimOrEmpty(levelField.getValue()),
-                trimOrEmpty(typeField.getValue()),
-                trimOrEmpty(notesField.getText())
-        ));
+        data.add(new Language(name));
 
         Collections.sort(data);
 
         clearForm();
     }
+
     public static Stage open() {
     Stage stage = new Stage();
     javafx.application.Platform.runLater(() -> {
@@ -147,7 +119,7 @@ public class DefineLanguagesApp extends Application {
         }
     });
     return stage;
-}
+    }
 
     private void updateLanguage() {
         Language sel = table.getSelectionModel().getSelectedItem();
@@ -161,9 +133,6 @@ public class DefineLanguagesApp extends Application {
             return;
         }
         sel.name.set(name);
-        sel.level.set(trimOrEmpty(levelField.getValue()));
-        sel.type.set(trimOrEmpty(typeField.getValue()));
-        sel.notes.set(trimOrEmpty(notesField.getText()));
         table.refresh();
         clearForm();
     }
@@ -176,9 +145,6 @@ public class DefineLanguagesApp extends Application {
 
     private void clearForm() {
         nameField.clear();
-        levelField.setValue(null);
-        typeField.setValue(null);
-        notesField.clear();
         table.getSelectionModel().clearSelection();
     }
 
@@ -204,10 +170,8 @@ public class DefineLanguagesApp extends Application {
                 w.write("name,level,type,notes\n");
 
                 for (Language l : langs) {
-                    w.write(csv(l.name.get())); w.write(",");
-                    w.write(csv(l.level.get())); w.write(",");
-                    w.write(csv(l.type.get())); w.write(",");
-                    w.write(csv(l.notes.get())); w.write("\n");
+                    w.write(csv(l.name.get()));
+                    w.write("\n");
                 }
             }
             info("Saved", "Saved to " + FILE.toString());
@@ -227,7 +191,7 @@ public class DefineLanguagesApp extends Application {
             while ((line = r.readLine()) != null) {
                 if (header) { header = false; continue; }
                 cols = parseCsv(line, 4);
-                out.add(new Language(cols[0], cols[1], cols[2], cols[3]));
+                out.add(new Language(cols[0]));
             }
 
         } catch (IOException ex) {
@@ -270,15 +234,9 @@ public class DefineLanguagesApp extends Application {
 
     public static class Language implements Comparable<Language>{
         public final SimpleStringProperty name = new SimpleStringProperty("");
-        public final SimpleStringProperty level = new SimpleStringProperty("");
-        public final SimpleStringProperty type = new SimpleStringProperty("");
-        public final SimpleStringProperty notes = new SimpleStringProperty("");
 
-        public Language(String n, String l, String t, String notes) {
+        public Language(String n) {
             this.name.set(n == null ? "" : n);
-            this.level.set(l == null ? "" : l);
-            this.type.set(t == null ? "" : t);
-            this.notes.set(notes == null ? "" : notes);
         }
 
         @Override
