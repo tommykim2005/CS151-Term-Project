@@ -121,6 +121,8 @@ public class DefineLanguagesApp extends Application {
     return stage;
     }
 
+    //test
+
     private void updateLanguage() {
         Language sel = table.getSelectionModel().getSelectedItem();
         if (sel == null) {
