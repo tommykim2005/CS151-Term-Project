@@ -20,7 +20,11 @@
             <font>
                 <Font size="15.0" />
             </font></Label>
+<<<<<<< HEAD
         <Label fx:id="menu_studentProfile" layoutX="506.0" layoutY="41.0" text="Student's profile">
+=======
+        <Label fx:id="menu_studentProfile" layoutX="506.0" layoutY="41.0" text="Student's profile" onMouseClicked="#define_student_click">
+>>>>>>> c0adff1 (a)
             <font>
                 <Font size="15.0" />
             </font></Label>
@@ -29,7 +33,11 @@
                 <Font size="15.0" />
             </font></Label>
         <Button fx:id="define_programming_language" layoutX="182.0" layoutY="234.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="322.0" text="Define new programming language" onAction="#programming_language_click"/>
+<<<<<<< HEAD
         <Button fx:id="create_student" layoutX="180.0" layoutY="363.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" />
+=======
+        <Button fx:id="create_student" layoutX="180.0" layoutY="363.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" onAction="#define_student_click"/>
+>>>>>>> c0adff1 (a)
     </children>
 </AnchorPane>
 

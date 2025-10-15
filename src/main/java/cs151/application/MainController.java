@@ -34,12 +34,21 @@
         private Button create_student;
 
         //opens a new scene for that asks the user to define a programming language
+
     @FXML
     private void programming_language_click() {
         Stage plStage = cs151.application.DefineLanguagesApp.open();
         define_programming_language.setDisable(true);
         plStage.setOnHidden(e -> define_programming_language.setDisable(false));
     }
+
+        @FXML
+        private void define_student_click(){
+            Stage plStage = cs151.application.DefineStudentApp.open();
+            create_student.setDisable(true);
+            plStage.setOnHidden(e -> create_student.setDisable(false));
+        }
+
 
 
     }
