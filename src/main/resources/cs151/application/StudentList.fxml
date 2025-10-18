@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="712.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.StudentListController">
+   <children>
+      <TableView fx:id="table" prefHeight="718.0" prefWidth="1080.0">
+        <columns>
+          <TableColumn fx:id="full_Name" prefWidth="67.0" text="Full Name" />
+          <TableColumn fx:id="academic_Status" prefWidth="102.0" text="Academic Status" />
+            <TableColumn fx:id="current_Job_Status" prefWidth="111.0" text="Current Job Status" />
+            <TableColumn fx:id="job_Details" prefWidth="77.0" text="Job Details" />
+            <TableColumn fx:id="programming_Languages" prefWidth="191.0" text="Programming Languages Known" />
+            <TableColumn fx:id="databases" prefWidth="112.0" text="Databases Known" />
+            <TableColumn fx:id="preferred_Role" prefWidth="173.0" text="Preferred Professional Role" />
+            <TableColumn fx:id="comments" prefWidth="106.0" text="Comments" />
+            <TableColumn fx:id="whitelist" prefWidth="72.0" text="Whitelist" />
+            <TableColumn fx:id="blacklist" prefWidth="67.0" text="Blacklist" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>
