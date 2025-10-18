@@ -3,7 +3,8 @@
     import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
-    import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
     import javafx.scene.control.Button;
     import javafx.scene.control.Label;
     import javafx.stage.Stage;
@@ -53,6 +54,23 @@
             menu_studentList.setDisable(true);
             SLstage.setOnHidden(e -> menu_studentList.setDisable(false));
         }
+
+
+@FXML
+private void openAddStudentPage() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/add_student.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) create_student.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
 
 
 

@@ -30,6 +30,13 @@
                 <Font size="15.0" />
             </font></Label>
         <Button fx:id="define_programming_language" layoutX="182.0" layoutY="234.0" mnemonicParsing="false" onAction="#programming_language_click" prefHeight="87.0" prefWidth="322.0" text="Define new programming language" />
-        <Button fx:id="create_student" layoutX="180.0" layoutY="363.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" />
+        <Button fx:id="create_student"
+        layoutX="180.0"
+        layoutY="363.0"
+        mnemonicParsing="false"
+        prefHeight="87.0"
+        prefWidth="322.0"
+        text="Create new student profile"
+        onAction="#openAddStudentPage" />
     </children>
 </AnchorPane>

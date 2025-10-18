@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cs151.application.AddStudentController"
+            prefHeight="500.0" prefWidth="650.0">
+
+    <children>
+        <Label layoutX="35.0" layoutY="25.0" text="Add Student Profile">
+            <font>
+                <Font size="28.0"/>
+            </font>
+        </Label>
+
+        <GridPane layoutX="50.0" layoutY="100.0" hgap="10" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" />
+                <ColumnConstraints minWidth="300" />
+            </columnConstraints>
+
+            <children>
+                <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nameField" promptText="Enter name"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Student ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="idField" promptText="Enter student ID"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" promptText="Enter email"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Major:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="majorField" promptText="Enter major"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Languages:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <ListView fx:id="languageList" prefHeight="100"
+                          GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+
+        <Button fx:id="saveButton"
+                layoutX="180.0" layoutY="380.0"
+                mnemonicParsing="false"
+                text="Save"
+                prefWidth="120"
+                onAction="#saveStudent"/>
+
+        <Button fx:id="backButton"
+                layoutX="340.0" layoutY="380.0"
+                mnemonicParsing="false"
+                text="Back"
+                prefWidth="120"
+                onAction="#goBack"/>
+    </children>
+</AnchorPane>

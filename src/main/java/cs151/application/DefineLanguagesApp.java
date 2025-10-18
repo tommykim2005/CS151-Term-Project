@@ -21,6 +21,8 @@ import java.util.List;
 public class DefineLanguagesApp extends Application {
     private TextField nameField = new TextField();
     private TextArea notesField = new TextArea();
+    private static java.util.List<String> languages = new java.util.ArrayList<>();
+
 
     private TableView<Language> table = new TableView<>();
     private final ObservableList<Language> data = FXCollections.observableArrayList();
@@ -241,6 +243,15 @@ public class DefineLanguagesApp extends Application {
             return this.name.get().compareTo(o.name.get());
         }
     }
+    public static java.util.List<String> getLanguages() {
+
+    return new java.util.ArrayList<>(languages);
+}
+    public static List<String> getLanguageList() {
+        return new ArrayList<>(languages); // assuming 'languages' is your existing List<String>
+}
+
+
 
     public static void main(String[] args) {
         launch(args);
