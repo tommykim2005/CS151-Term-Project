@@ -10,8 +10,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage home) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("Main.fxml"));
-
+        FXMLLoader root = new FXMLLoader(getClass().getResource("main.fxml"));
         home.setTitle("MentorLink - Home Page");
         home.setScene(new Scene(root.load()));
         home.show();

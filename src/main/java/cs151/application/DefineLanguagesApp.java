@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -121,8 +120,6 @@ public class DefineLanguagesApp extends Application {
     return stage;
     }
 
-    //test
-
     private void updateLanguage() {
         Language sel = table.getSelectionModel().getSelectedItem();
         if (sel == null) {
@@ -169,7 +166,6 @@ public class DefineLanguagesApp extends Application {
             if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());
             try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                w.write("name,level,type,notes\n");
 
                 for (Language l : langs) {
                     w.write(csv(l.name.get()));
@@ -188,10 +184,9 @@ public class DefineLanguagesApp extends Application {
         if (!Files.exists(FILE)) return out;
         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
 
-            String line; boolean header = true; String[] cols;
+            String line; String[] cols;
 
             while ((line = r.readLine()) != null) {
-                if (header) { header = false; continue; }
                 cols = parseCsv(line, 4);
                 out.add(new Language(cols[0]));
             }

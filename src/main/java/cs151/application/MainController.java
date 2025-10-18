@@ -1,6 +1,6 @@
     package cs151.application;
-    import cs151.application.DefineLanguagesApp;
 
+    import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
     import javafx.scene.Scene;
@@ -19,7 +19,7 @@
         private Label menu_search;
 
         @FXML
-        private Label menu_studentList;
+        private Button menu_studentList;
 
         @FXML
         private Label menu_studentProfile;
@@ -43,10 +43,15 @@
     }
 
         @FXML
-        private void define_student_click(){
-            Stage plStage = cs151.application.DefineStudentApp.open();
-            create_student.setDisable(true);
-            plStage.setOnHidden(e -> create_student.setDisable(false));
+        private void switchToStudentList(ActionEvent event) throws IOException{
+            Stage SLstage = new Stage();
+            FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
+            SLstage.setTitle("Student List");
+            SLstage.setScene(new Scene(root.load()));
+            SLstage.show();
+
+            menu_studentList.setDisable(true);
+            SLstage.setOnHidden(e -> menu_studentList.setDisable(false));
         }
 
 
