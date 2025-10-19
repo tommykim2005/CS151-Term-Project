@@ -1,0 +1,1027 @@
+Index: data/student_data_test.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/student_data_test.csv b/data/student_data_test.csv
+deleted file mode 100644
+--- a/data/student_data_test.csv	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ /dev/null	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
+@@ -1,20 +0,0 @@
+-Student_1,Junior,Not Employed,N/A,Go|JavaScript|TypeScript|C++,Postgres|MongoDB,Back-End,Shows great teamwork and communication.|Active participant in class discussions.|Excellent progress this semester.,True,False
+-Student_2,Freshman,Not Employed,N/A,TypeScript|Go,MongoDB,Data,Excellent progress this semester.|Needs improvement in coding practices.|Struggling with database concepts.,False,True
+-Student_3,Senior,Not Employed,N/A,Python|Java,MySQL,Other,Outstanding project submission.|Shows great teamwork and communication.|Excellent progress this semester.,True,False
+-Student_4,Junior,Employed,Intern at TechCorp,Java|C#,Oracle|SQLite,Full-Stack,Active participant in class discussions.|Needs improvement in coding practices.,True,False
+-Student_5,Graduate,Not Employed,N/A,JavaScript|Ruby,MongoDB|MySQL|Firebase,Other,Excellent progress this semester.|Needs improvement in coding practices.|Struggling with database concepts.,True,False
+-Student_6,Freshman,Employed,Research Assistant,C#,MongoDB|Postgres|SQLite,Back-End,Struggling with database concepts.|Needs improvement in coding practices.|Excellent progress this semester.,True,False
+-Student_7,Sophomore,Employed,Software Engineer at CodeBase,Ruby|Python|Go|JavaScript,Firebase|MySQL,Full-Stack,Struggling with database concepts.|Shows great teamwork and communication.|Outstanding project submission.,False,True
+-Student_8,Junior,Employed,Software Engineer at CodeBase,Ruby|C++|Java,Postgres|MySQL,Other,Active participant in class discussions.|Outstanding project submission.|Struggling with database concepts.,False,True
+-Student_9,Graduate,Employed,Intern at TechCorp,TypeScript|C#,Firebase|SQLite,Back-End,Struggling with database concepts.,True,False
+-Student_10,Sophomore,Employed,Software Engineer at CodeBase,Python|Java,MongoDB|Firebase|SQLite,Other,Excellent progress this semester.|Shows great teamwork and communication.|Struggling with database concepts.,False,False
+-Student_11,Senior,Not Employed,N/A,Go|JavaScript|Ruby|TypeScript,Postgres|MySQL,Front-End,Active participant in class discussions.|Shows great teamwork and communication.,False,True
+-Student_12,Junior,Not Employed,N/A,TypeScript|JavaScript|C++,MySQL,Other,Needs improvement in coding practices.|Struggling with database concepts.|Active participant in class discussions.,True,False
+-Student_13,Graduate,Not Employed,N/A,C#|C++,SQLite|Oracle,Back-End,Outstanding project submission.|Active participant in class discussions.,True,False
+-Student_14,Freshman,Not Employed,N/A,Go,SQLite|Postgres|MongoDB,Other,Outstanding project submission.|Shows great teamwork and communication.,True,False
+-Student_15,Sophomore,Not Employed,N/A,Python|C++|Java|Go,SQLite|Postgres,Back-End,Needs improvement in coding practices.|Outstanding project submission.|Struggling with database concepts.,False,False
+-Student_16,Sophomore,Employed,Intern at TechCorp,Go|Python|Java|Ruby,SQLite,Data,Shows great teamwork and communication.|Needs improvement in coding practices.|Active participant in class discussions.,True,False
+-Student_17,Graduate,Not Employed,N/A,Python|Go|C#|Ruby,Postgres|Oracle|SQLite,Other,Active participant in class discussions.,True,False
+-Student_18,Senior,Not Employed,N/A,Ruby|Java|C++,SQLite,Other,Excellent progress this semester.|Outstanding project submission.|Active participant in class discussions.,True,False
+-Student_19,Sophomore,Employed,Software Engineer at CodeBase,C#|Python|Java|Go,MySQL|SQLite,Back-End,Needs improvement in coding practices.,True,False
+-Student_20,Graduate,Not Employed,N/A,JavaScript|C++|Java|Ruby,Firebase,Back-End,Excellent progress this semester.|Shows great teamwork and communication.,False,False
+Index: src/main/java/cs151/application/AddStudentController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/cs151/application/AddStudentController.java b/src/main/java/cs151/application/AddStudentController.java
+deleted file mode 100644
+--- a/src/main/java/cs151/application/AddStudentController.java	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ /dev/null	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
+@@ -1,103 +0,0 @@
+-package cs151.application;
+-
+-import javafx.fxml.FXML;
+-import javafx.fxml.FXMLLoader;
+-import javafx.scene.Scene;
+-import javafx.scene.control.*;
+-import javafx.scene.layout.Region;
+-import javafx.stage.Stage;
+-import javafx.collections.FXCollections;
+-
+-import java.io.IOException;
+-
+-public class AddStudentController {
+-
+-    // 2.1 Basic Information
+-    @FXML private TextField fullNameField;                                // required
+-    @FXML private ComboBox<String> academicStatusCombo;                   // required [Freshman, Sophomore, Junior, Senior, Graduate]
+-    @FXML private RadioButton employedRadio;                              // Employed
+-    @FXML private RadioButton notEmployedRadio;                           // Not Employed
+-    @FXML private ToggleGroup jobStatusGroup;                             // injected in FXML <fx:define>
+-    @FXML private TextField jobDetailsField;                              // required if employed
+-
+-    @FXML private Button saveButton;
+-    @FXML private Button backButton;
+-
+-    @FXML
+-    public void initialize() {
+-        academicStatusCombo.setItems(FXCollections.observableArrayList(
+-                "Freshman", "Sophomore", "Junior", "Senior", "Graduate"
+-        ));
+-
+-        // Enable/disable Job Details based on job status
+-        jobStatusGroup.selectedToggleProperty().addListener((obs, oldT, newT) -> {
+-            boolean employed = employedRadio.isSelected();
+-            jobDetailsField.setDisable(!employed);
+-            if (!employed) jobDetailsField.clear();
+-        });
+-
+-        // Safety net if ToggleGroup didn’t inject for any reason
+-        if (jobStatusGroup == null) {
+-            jobStatusGroup = new ToggleGroup();
+-            employedRadio.setToggleGroup(jobStatusGroup);
+-            notEmployedRadio.setToggleGroup(jobStatusGroup);
+-        }
+-    }
+-
+-    @FXML
+-    private void saveStudent() {
+-        String name = Student.normalizeName(fullNameField.getText());
+-        if (name.isEmpty()) { alert("Validation", "Full Name is required."); return; }
+-
+-        String academic = valueOf(academicStatusCombo);
+-        if (academic.isEmpty()) { alert("Validation", "Academic Status is required."); return; }
+-
+-        String jobStatus = employedRadio.isSelected() ? "Employed" : "Not Employed";
+-        String jobDetails = jobDetailsField.getText() == null ? "" : jobDetailsField.getText().trim();
+-        if ("Employed".equals(jobStatus) && jobDetails.isEmpty()) {
+-            alert("Validation", "Job Details is required when Employed."); return;
+-        }
+-
+-        // Duplicate prevention (trimmed full name, case-insensitive)
+-        StudentRepository.loadAll();
+-        if (StudentRepository.existsByName(name)) {
+-            alert("Duplicate", "A student with the same name already exists."); return;
+-        }
+-
+-        Student s = new Student(name, academic, jobStatus, jobDetails);
+-        StudentRepository.add(s);
+-
+-        alert("Saved", "Student profile saved.");
+-        clearForm();
+-    }
+-
+-    @FXML
+-    private void goBack() {
+-        try {
+-            FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+-            Stage stage = (Stage) backButton.getScene().getWindow();
+-            stage.setScene(new Scene(loader.load()));
+-        } catch (IOException e) {
+-            e.printStackTrace();
+-        }
+-    }
+-
+-    private void clearForm() {
+-        fullNameField.clear();
+-        academicStatusCombo.getSelectionModel().clearSelection();
+-        notEmployedRadio.setSelected(true);
+-        jobDetailsField.clear();
+-    }
+-
+-    private String valueOf(ComboBox<String> cb) {
+-        String v = cb.getValue();
+-        return v == null ? "" : v.trim();
+-    }
+-
+-    private void alert(String head, String msg) {
+-        Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
+-        a.setHeaderText(head);
+-        a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+-        a.showAndWait();
+-    }
+-}
+Index: src/main/resources/cs151/application/add_student.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/cs151/application/add_student.fxml b/src/main/resources/cs151/application/add_student.fxml
+deleted file mode 100644
+--- a/src/main/resources/cs151/application/add_student.fxml	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ /dev/null	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
+@@ -1,65 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-
+-<?import javafx.geometry.Insets?>
+-<?import javafx.scene.control.*?>
+-<?import javafx.scene.layout.*?>
+-<?import javafx.scene.text.*?>
+-
+-<AnchorPane xmlns="http://javafx.com/javafx/17"
+-            xmlns:fx="http://javafx.com/fxml/1"
+-            fx:controller="cs151.application.AddStudentController"
+-            prefHeight="520.0" prefWidth="720.0">
+-
+-    <fx:define>
+-        <ToggleGroup fx:id="jobStatusGroup"/>
+-    </fx:define>
+-
+-    <Label text="Create Student (Section 2.1)"
+-           AnchorPane.topAnchor="16.0" AnchorPane.leftAnchor="16.0">
+-        <font><Font size="22.0"/></font>
+-    </Label>
+-
+-    <GridPane AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="16.0"
+-              AnchorPane.rightAnchor="16.0" AnchorPane.bottomAnchor="72.0">
+-        <columnConstraints>
+-            <ColumnConstraints minWidth="180.0" prefWidth="220.0"/>
+-            <ColumnConstraints minWidth="300.0" prefWidth="420.0"/>
+-        </columnConstraints>
+-        <rowConstraints>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-        </rowConstraints>
+-        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+-        <hgap>10</hgap><vgap>10</vgap>
+-
+-        <children>
+-            <Label text="Full Name (required):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+-            <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+-
+-            <Label text="Academic Status (required):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+-            <ComboBox fx:id="academicStatusCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+-
+-            <Label text="Current Job Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+-            <HBox spacing="16" GridPane.rowIndex="2" GridPane.columnIndex="1">
+-                <children>
+-                    <RadioButton fx:id="employedRadio" text="Employed" toggleGroup="$jobStatusGroup"/>
+-                    <RadioButton fx:id="notEmployedRadio" text="Not Employed" toggleGroup="$jobStatusGroup" selected="true"/>
+-                </children>
+-            </HBox>
+-
+-            <Label text="Job Details (required if Employed):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+-            <TextField fx:id="jobDetailsField" GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
+-        </children>
+-    </GridPane>
+-
+-    <HBox spacing="12" alignment="CENTER_RIGHT"
+-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="8.0">
+-        <children>
+-            <Button fx:id="saveButton" text="Save" onAction="#saveStudent" prefWidth="120" defaultButton="true"/>
+-            <Button fx:id="backButton" text="Back" onAction="#goBack" prefWidth="120" cancelButton="true"/>
+-        </children>
+-        <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
+-    </HBox>
+-</AnchorPane>
+Index: src/main/java/cs151/application/StudentListController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package cs151.application;\r\n\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.TableColumn;\r\nimport javafx.scene.control.TableView;\r\nimport javafx.scene.control.cell.PropertyValueFactory;\r\n\r\nimport java.net.URL;\r\nimport java.util.Comparator;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class StudentListController implements Initializable {\r\n    @FXML private TableView<Student> table;\r\n    @FXML private TableColumn<Student, String> full_Name;\r\n    @FXML private TableColumn<Student, String> academic_Status;\r\n    @FXML private TableColumn<Student, String> current_Job_Status;\r\n    @FXML private TableColumn<Student, String> job_Details;\r\n\r\n    private final ObservableList<Student> items = FXCollections.observableArrayList();\r\n\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle rb) {\r\n        full_Name.setCellValueFactory(new PropertyValueFactory<>(\"full_Name\"));\r\n        academic_Status.setCellValueFactory(new PropertyValueFactory<>(\"academic_Status\"));\r\n        current_Job_Status.setCellValueFactory(new PropertyValueFactory<>(\"current_Job_Status\"));\r\n        job_Details.setCellValueFactory(new PropertyValueFactory<>(\"job_Details\"));\r\n\r\n        StudentRepository.loadAll();\r\n        items.setAll(StudentRepository.getAll());\r\n        items.sort(Comparator.naturalOrder()); // case-insensitive by full name (via Comparable)\r\n        table.setItems(items);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/cs151/application/StudentListController.java b/src/main/java/cs151/application/StudentListController.java
+--- a/src/main/java/cs151/application/StudentListController.java	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/src/main/java/cs151/application/StudentListController.java	(date 1760848742494)
+@@ -6,31 +6,118 @@
+ import javafx.fxml.Initializable;
+ import javafx.scene.control.TableColumn;
+ import javafx.scene.control.TableView;
++import javafx.scene.control.cell.CheckBoxTableCell;
+ import javafx.scene.control.cell.PropertyValueFactory;
+ 
+-import java.net.URL;
+-import java.util.Comparator;
++import java.nio.charset.StandardCharsets;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.nio.file.Paths;
++import java.util.Collections;
+ import java.util.ResourceBundle;
++import java.net.URL;
++
++import java.io.BufferedReader;
++import java.io.IOException;
+ 
+ public class StudentListController implements Initializable {
+-    @FXML private TableView<Student> table;
+-    @FXML private TableColumn<Student, String> full_Name;
+-    @FXML private TableColumn<Student, String> academic_Status;
+-    @FXML private TableColumn<Student, String> current_Job_Status;
+-    @FXML private TableColumn<Student, String> job_Details;
++
++    @FXML
++    private TableView<Student> table;
++
++    @FXML
++    private TableColumn<Student, String> full_Name;
++
++    @FXML
++    private TableColumn<Student, String> academic_Status;
++
++    @FXML
++    private TableColumn<Student, String> current_Job_Status;
+ 
++    @FXML
++    private TableColumn<Student, String> databases;
++
++    @FXML
++    private TableColumn<Student, String> job_Details;
++
++    @FXML
++    private TableColumn<Student,String> preferred_Role;
++
++    @FXML
++    private TableColumn<Student, String> programming_Languages;
++
++    @FXML
++    private TableColumn<Student, String> comments;
++
++    @FXML
++    private TableColumn<Student, Boolean> whitelist;
++
++    @FXML
++    private TableColumn<Student, Boolean> blacklist;
++
++    private static final Path FILE = Paths.get("data", "student_profiles.csv");
+     private final ObservableList<Student> items = FXCollections.observableArrayList();
+ 
++
+     @Override
+-    public void initialize(URL url, ResourceBundle rb) {
++    public void initialize (URL url, ResourceBundle resourceBundle){
++
+         full_Name.setCellValueFactory(new PropertyValueFactory<>("full_Name"));
+         academic_Status.setCellValueFactory(new PropertyValueFactory<>("academic_Status"));
+         current_Job_Status.setCellValueFactory(new PropertyValueFactory<>("current_Job_Status"));
+         job_Details.setCellValueFactory(new PropertyValueFactory<>("job_Details"));
++        programming_Languages.setCellValueFactory(new PropertyValueFactory<>("programming_Languages"));
++        databases.setCellValueFactory(new PropertyValueFactory<>("databases"));
++        preferred_Role.setCellValueFactory(new PropertyValueFactory<>("preferred_Role"));
++        comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
++
++        whitelist.setCellValueFactory(new PropertyValueFactory<>("whitelist"));
++        whitelist.setCellFactory(CheckBoxTableCell.forTableColumn(whitelist));
++        whitelist.setEditable(false);
+ 
+-        StudentRepository.loadAll();
+-        items.setAll(StudentRepository.getAll());
+-        items.sort(Comparator.naturalOrder()); // case-insensitive by full name (via Comparable)
++        blacklist.setCellValueFactory(new PropertyValueFactory<>("blacklist"));
++        blacklist.setCellFactory(CheckBoxTableCell.forTableColumn(blacklist));
++        blacklist.setEditable(false);
++
++        Collections.sort(items);
++
+         table.setItems(items);
++
++        load();
+     }
++
++    private void load() {
++
++        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
++
++            String line; String[] cols;
++
++            while ((line = r.readLine()) != null) {
++                String[] fields = line.split(",", -1);
++
++                String full_Name = fields[0];
++                String Academic_Status = fields[1];
++                String Current_Job_Status = fields[2];
++                String Job_Details = fields[3];
++                String Programming_Languages = fields[4];
++                String Databases = fields[5];
++                String Preferred_Role = fields[6];
++                String Comments = fields[7];
++
++                boolean Whitelist;
++                Whitelist = fields[8].equalsIgnoreCase("TRUE");
++
++                boolean Blacklist;
++                Blacklist = fields[9].equalsIgnoreCase("TRUE");
++
++                Student output = new Student(full_Name,Academic_Status,Current_Job_Status,Job_Details,Programming_Languages,Databases,Preferred_Role,Comments,Whitelist,Blacklist);
++                items.add(output);
++            }
++
++        } catch (IOException ex) {
++            ex.printStackTrace();
++        }
++        //return out;
++    }
++
+ }
+Index: src/main/java/cs151/application/Student.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package cs151.application;\r\n\r\nimport javafx.beans.property.*;\r\n\r\npublic class Student implements Comparable<Student> {\r\n    private final StringProperty full_Name = new SimpleStringProperty(\"\");\r\n    private final StringProperty academic_Status = new SimpleStringProperty(\"\");\r\n    private final StringProperty current_Job_Status = new SimpleStringProperty(\"\");\r\n    private final StringProperty job_Details = new SimpleStringProperty(\"\");\r\n\r\n    public Student() {}\r\n\r\n    public Student(String fullName, String academic, String currentJob, String jobDetails) {\r\n        setFull_Name(fullName);\r\n        setAcademic_Status(academic);\r\n        setCurrent_Job_Status(currentJob);\r\n        setJob_Details(jobDetails);\r\n    }\r\n\r\n    public static String normalizeName(String name) { return name == null ? \"\" : name.trim(); }\r\n\r\n    public String getFull_Name() { return full_Name.get(); }\r\n    public void setFull_Name(String v) { full_Name.set(v); }\r\n    public StringProperty full_NameProperty() { return full_Name; }\r\n\r\n    public String getAcademic_Status() { return academic_Status.get(); }\r\n    public void setAcademic_Status(String v) { academic_Status.set(v); }\r\n    public StringProperty academic_StatusProperty() { return academic_Status; }\r\n\r\n    public String getCurrent_Job_Status() { return current_Job_Status.get(); }\r\n    public void setCurrent_Job_Status(String v) { current_Job_Status.set(v); }\r\n    public StringProperty current_Job_StatusProperty() { return current_Job_Status; }\r\n\r\n    public String getJob_Details() { return job_Details.get(); }\r\n    public void setJob_Details(String v) { job_Details.set(v); }\r\n    public StringProperty job_DetailsProperty() { return job_Details; }\r\n\r\n    @Override\r\n    public int compareTo(Student o) {\r\n        String a = normalizeName(getFull_Name());\r\n        String b = normalizeName(o.getFull_Name());\r\n        return a.compareToIgnoreCase(b);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/cs151/application/Student.java b/src/main/java/cs151/application/Student.java
+--- a/src/main/java/cs151/application/Student.java	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/src/main/java/cs151/application/Student.java	(date 1760848687550)
+@@ -1,44 +1,103 @@
+ package cs151.application;
+ 
+-import javafx.beans.property.*;
++import javafx.beans.property.BooleanProperty;
++import javafx.beans.property.SimpleBooleanProperty;
++import javafx.fxml.FXML;
+ 
+-public class Student implements Comparable<Student> {
+-    private final StringProperty full_Name = new SimpleStringProperty("");
+-    private final StringProperty academic_Status = new SimpleStringProperty("");
+-    private final StringProperty current_Job_Status = new SimpleStringProperty("");
+-    private final StringProperty job_Details = new SimpleStringProperty("");
++public class Student implements Comparable<Student>{
++    @FXML
++    private String full_Name;
++
++    @FXML
++    private String academic_Status;
++
++    @FXML
++    private String current_Job_Status;
++
++    @FXML
++    private String job_Details;
++
++    @FXML
++    private String programming_Languages;
++
++    @FXML
++    private String databases;
++
++    @FXML
++    private String preferred_Role;
++
++    @FXML
++    private String comments;
++
++    @FXML
++    private BooleanProperty whitelist;
+ 
+-    public Student() {}
++    @FXML
++    private BooleanProperty blacklist;
+ 
+-    public Student(String fullName, String academic, String currentJob, String jobDetails) {
+-        setFull_Name(fullName);
+-        setAcademic_Status(academic);
+-        setCurrent_Job_Status(currentJob);
+-        setJob_Details(jobDetails);
++    public BooleanProperty whitelistProperty() {
++        return this.whitelist;
+     }
+ 
+-    public static String normalizeName(String name) { return name == null ? "" : name.trim(); }
++    public Boolean isWhitelist() {
++        return this.whitelist.get();
++    }
+ 
+-    public String getFull_Name() { return full_Name.get(); }
+-    public void setFull_Name(String v) { full_Name.set(v); }
+-    public StringProperty full_NameProperty() { return full_Name; }
++    public BooleanProperty blacklistProperty() {
++        return this.blacklist;
++    }
+ 
+-    public String getAcademic_Status() { return academic_Status.get(); }
+-    public void setAcademic_Status(String v) { academic_Status.set(v); }
+-    public StringProperty academic_StatusProperty() { return academic_Status; }
++    public Boolean isBlacklist() {
++        return this.blacklist.get();
++    }
+ 
+-    public String getCurrent_Job_Status() { return current_Job_Status.get(); }
+-    public void setCurrent_Job_Status(String v) { current_Job_Status.set(v); }
+-    public StringProperty current_Job_StatusProperty() { return current_Job_Status; }
++    public String getComments() {
++        return this.comments;
++    }
+ 
+-    public String getJob_Details() { return job_Details.get(); }
+-    public void setJob_Details(String v) { job_Details.set(v); }
+-    public StringProperty job_DetailsProperty() { return job_Details; }
++    public String getPreferred_Role() {
++        return this.preferred_Role;
++    }
++
++    public String getDatabases() {
++        return this.databases;
++    }
++
++    public String getProgramming_Languages() {
++        return this.programming_Languages;
++    }
++
++    public String getJob_Details() {
++        return this.job_Details;
++    }
++
++    public String getCurrent_Job_Status() {
++        return this.current_Job_Status;
++    }
++
++    public String getAcademic_Status() {
++        return this.academic_Status;
++    }
++
++    public String getFull_Name() {
++        return this.full_Name;
++    }
++
++    public Student(String full_Name, String academic_Status, String current_Job_Status, String job_Details, String programming_Languages, String databases, String preferred_Role, String comments, Boolean whitelist, Boolean blacklist) {
++        this.full_Name = full_Name;
++        this.academic_Status = academic_Status;
++        this.current_Job_Status = current_Job_Status;
++        this.job_Details = job_Details;
++        this.programming_Languages = programming_Languages;
++        this.databases = databases;
++        this.preferred_Role = preferred_Role;
++        this.comments = comments;
++        this.whitelist = new SimpleBooleanProperty(whitelist);
++        this.blacklist = new SimpleBooleanProperty(blacklist);
++    }
+ 
+     @Override
+     public int compareTo(Student o) {
+-        String a = normalizeName(getFull_Name());
+-        String b = normalizeName(o.getFull_Name());
+-        return a.compareToIgnoreCase(b);
++        return this.full_Name.compareTo(o.full_Name);
+     }
+ }
+Index: target/classes/cs151/application/StudentList.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.*?>\r\n<?import javafx.scene.layout.*?>\r\n\r\n<BorderPane xmlns=\"http://javafx.com/javafx/17\"\r\n            xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"cs151.application.StudentListController\"\r\n            prefWidth=\"800.0\" prefHeight=\"520.0\">\r\n\r\n    <center>\r\n        <TableView fx:id=\"table\">\r\n            <columns>\r\n                <TableColumn fx:id=\"full_Name\" text=\"Full Name\" prefWidth=\"220.0\"/>\r\n                <TableColumn fx:id=\"academic_Status\" text=\"Academic Status\" prefWidth=\"160.0\"/>\r\n                <TableColumn fx:id=\"current_Job_Status\" text=\"Job Status\" prefWidth=\"140.0\"/>\r\n                <TableColumn fx:id=\"job_Details\" text=\"Job Details\" prefWidth=\"260.0\"/>\r\n            </columns>\r\n        </TableView>\r\n    </center>\r\n</BorderPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/cs151/application/StudentList.fxml b/target/classes/cs151/application/StudentList.fxml
+--- a/target/classes/cs151/application/StudentList.fxml	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/target/classes/cs151/application/StudentList.fxml	(date 1760848430460)
+@@ -1,21 +1,77 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
++<?import javafx.geometry.Insets?>
+ <?import javafx.scene.control.*?>
+ <?import javafx.scene.layout.*?>
++<?import javafx.scene.text.*?>
+ 
+ <BorderPane xmlns="http://javafx.com/javafx/17"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cs151.application.StudentListController"
+-            prefWidth="800.0" prefHeight="520.0">
++            prefWidth="1024.0" prefHeight="680.0">
++
++    <top>
++        <!-- Search / Filter controls -->
++        <VBox spacing="6" BorderPane.alignment="CENTER">
++            <children>
++                <Label text="Search / Filter (case-insensitive)">
++                    <font><Font size="18.0"/></font>
++                </Label>
++
++                <HBox spacing="8">
++                    <children>
++                        <Label text="Name:"/>
++                        <TextField fx:id="nameSearch" prefWidth="160.0"/>
++
++                        <Label text="Status:"/>
++                        <ComboBox fx:id="statusSearch" prefWidth="140.0"/>
++
++                        <Label text="Languages (comma sep):"/>
++                        <TextField fx:id="langSearch" prefWidth="180.0"/>
++
++                        <Label text="Databases (comma sep):"/>
++                        <TextField fx:id="dbSearch" prefWidth="180.0"/>
++
++                        <Label text="Role:"/>
++                        <ComboBox fx:id="roleSearch" prefWidth="140.0"/>
++
++                        <Button fx:id="filterBtn" text="Filter"/>
++                        <Button fx:id="resetBtn" text="Reset"/>
++                    </children>
++                </HBox>
++            </children>
++            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
++        </VBox>
++    </top>
+ 
+     <center>
+-        <TableView fx:id="table">
++        <!-- Table -->
++        <TableView fx:id="table" editable="true">
+             <columns>
+-                <TableColumn fx:id="full_Name" text="Full Name" prefWidth="220.0"/>
+-                <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="160.0"/>
+-                <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="140.0"/>
+-                <TableColumn fx:id="job_Details" text="Job Details" prefWidth="260.0"/>
++                <TableColumn fx:id="full_Name" text="Full Name" prefWidth="150.0"/>
++                <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="120.0"/>
++                <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="120.0"/>
++                <TableColumn fx:id="job_Details" text="Job Details" prefWidth="150.0"/>
++                <TableColumn fx:id="programming_Languages" text="Languages" prefWidth="160.0"/>
++                <TableColumn fx:id="databases" text="Databases" prefWidth="160.0"/>
++                <TableColumn fx:id="preferred_Role" text="Role" prefWidth="120.0"/>
++                <TableColumn fx:id="comments" text="Comments" prefWidth="250.0"/>
++                <TableColumn fx:id="whitelist" text="Whitelist" prefWidth="80.0"/>
++                <TableColumn fx:id="blacklist" text="Blacklist" prefWidth="80.0"/>
+             </columns>
+         </TableView>
+     </center>
++
++    <bottom>
++        <!-- Comment + delete controls -->
++        <HBox spacing="12" BorderPane.alignment="CENTER">
++            <children>
++                <Label text="Add Comment:"/>
++                <TextArea fx:id="addCommentArea" prefRowCount="2" prefWidth="540.0"/>
++                <Button fx:id="addCommentBtn" text="Append to Selected"/>
++                <Button fx:id="deleteBtn" text="Delete Selected"/>
++            </children>
++            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
++        </HBox>
++    </bottom>
+ </BorderPane>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1fb8eb05-a9d9-40a4-8393-f8736240f3fa\" name=\"Changes\" comment=\"added view student profiles\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"33dDMg63XHAfVtHQaHB8c1zs8Dx\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.DefineLanguagesApp.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;k&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/kobed/CS/CS 151/dev-27-0.3&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"cs151.application.Main\" />\r\n      <module name=\"MentorLink\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"cs151.application.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <module name=\"New folder\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <module name=\"New folder\" />\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"5777dd33-de97-4fc5-a237-6ffa5735be16\" name=\"Changes\" comment=\"\" />\r\n      <created>1759638008431</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1759638008431</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"added view student profiles\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760764883589</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760764883589</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"added view student profiles\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"added view student profiles\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/.idea/workspace.xml	(date 1760848786864)
+@@ -4,7 +4,41 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added view student profiles" />
++    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added view student profiles">
++      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/languages.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/languages.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/student_data_test.csv" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/student_profiles.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/student_profiles.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/Student.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/add_student.fxml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/Student.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentList.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/main.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -20,6 +54,18 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "spinningjoel"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "git@github.com:tommykim2005/CS151-Term-Project",
++    "accountId": "91142fd1-0e14-4bc3-8ff2-36cc62198a6d"
++  }
++}]]></component>
+   <component name="ProblemsViewState">
+     <option name="selectedTabId" value="CurrentFile" />
+   </component>
+@@ -78,7 +124,7 @@
+   </component>
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="5777dd33-de97-4fc5-a237-6ffa5735be16" name="Changes" comment="" />
++      <changelist id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added view student profiles" />
+       <created>1759638008431</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+Index: target/classes/cs151/application/add_student.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.*?>\r\n<?import javafx.scene.layout.*?>\r\n<?import javafx.scene.text.*?>\r\n\r\n<AnchorPane xmlns=\"http://javafx.com/javafx/17\"\r\n            xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"cs151.application.AddStudentController\"\r\n            prefHeight=\"520.0\" prefWidth=\"720.0\">\r\n\r\n    <fx:define>\r\n        <ToggleGroup fx:id=\"jobStatusGroup\"/>\r\n    </fx:define>\r\n\r\n    <Label text=\"Create Student (Section 2.1)\"\r\n           AnchorPane.topAnchor=\"16.0\" AnchorPane.leftAnchor=\"16.0\">\r\n        <font><Font size=\"22.0\"/></font>\r\n    </Label>\r\n\r\n    <GridPane AnchorPane.topAnchor=\"60.0\" AnchorPane.leftAnchor=\"16.0\"\r\n              AnchorPane.rightAnchor=\"16.0\" AnchorPane.bottomAnchor=\"72.0\">\r\n        <columnConstraints>\r\n            <ColumnConstraints minWidth=\"180.0\" prefWidth=\"220.0\"/>\r\n            <ColumnConstraints minWidth=\"300.0\" prefWidth=\"420.0\"/>\r\n        </columnConstraints>\r\n        <rowConstraints>\r\n            <RowConstraints prefHeight=\"32.0\"/>\r\n            <RowConstraints prefHeight=\"32.0\"/>\r\n            <RowConstraints prefHeight=\"32.0\"/>\r\n            <RowConstraints prefHeight=\"32.0\"/>\r\n        </rowConstraints>\r\n        <padding><Insets top=\"8\" right=\"8\" bottom=\"8\" left=\"8\"/></padding>\r\n        <hgap>10</hgap><vgap>10</vgap>\r\n\r\n        <children>\r\n            <Label text=\"Full Name (required):\" GridPane.rowIndex=\"0\" GridPane.columnIndex=\"0\"/>\r\n            <TextField fx:id=\"fullNameField\" GridPane.rowIndex=\"0\" GridPane.columnIndex=\"1\"/>\r\n\r\n            <Label text=\"Academic Status (required):\" GridPane.rowIndex=\"1\" GridPane.columnIndex=\"0\"/>\r\n            <ComboBox fx:id=\"academicStatusCombo\" GridPane.rowIndex=\"1\" GridPane.columnIndex=\"1\"/>\r\n\r\n            <Label text=\"Current Job Status:\" GridPane.rowIndex=\"2\" GridPane.columnIndex=\"0\"/>\r\n            <HBox spacing=\"16\" GridPane.rowIndex=\"2\" GridPane.columnIndex=\"1\">\r\n                <children>\r\n                    <RadioButton fx:id=\"employedRadio\" text=\"Employed\" toggleGroup=\"$jobStatusGroup\"/>\r\n                    <RadioButton fx:id=\"notEmployedRadio\" text=\"Not Employed\" toggleGroup=\"$jobStatusGroup\" selected=\"true\"/>\r\n                </children>\r\n            </HBox>\r\n\r\n            <Label text=\"Job Details (required if Employed):\" GridPane.rowIndex=\"3\" GridPane.columnIndex=\"0\"/>\r\n            <TextField fx:id=\"jobDetailsField\" GridPane.rowIndex=\"3\" GridPane.columnIndex=\"1\" disable=\"true\"/>\r\n        </children>\r\n    </GridPane>\r\n\r\n    <HBox spacing=\"12\" alignment=\"CENTER_RIGHT\"\r\n          AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\" AnchorPane.bottomAnchor=\"8.0\">\r\n        <children>\r\n            <Button fx:id=\"saveButton\" text=\"Save\" onAction=\"#saveStudent\" prefWidth=\"120\" defaultButton=\"true\"/>\r\n            <Button fx:id=\"backButton\" text=\"Back\" onAction=\"#goBack\" prefWidth=\"120\" cancelButton=\"true\"/>\r\n        </children>\r\n        <padding><Insets top=\"8\" right=\"16\" bottom=\"8\" left=\"16\"/></padding>\r\n    </HBox>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/cs151/application/add_student.fxml b/target/classes/cs151/application/add_student.fxml
+--- a/target/classes/cs151/application/add_student.fxml	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/target/classes/cs151/application/add_student.fxml	(date 1760848430471)
+@@ -8,58 +8,91 @@
+ <AnchorPane xmlns="http://javafx.com/javafx/17"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cs151.application.AddStudentController"
+-            prefHeight="520.0" prefWidth="720.0">
++            prefHeight="640.0" prefWidth="860.0">
+ 
++    <!-- Make sure the ToggleGroup is defined so it injects -->
+     <fx:define>
+         <ToggleGroup fx:id="jobStatusGroup"/>
+     </fx:define>
+ 
+-    <Label text="Create Student (Section 2.1)"
+-           AnchorPane.topAnchor="16.0" AnchorPane.leftAnchor="16.0">
+-        <font><Font size="22.0"/></font>
+-    </Label>
++    <children>
++        <Label layoutX="24.0" layoutY="18.0" text="Define Student Profile">
++            <font><Font size="28.0"/></font>
++        </Label>
+ 
+-    <GridPane AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="16.0"
+-              AnchorPane.rightAnchor="16.0" AnchorPane.bottomAnchor="72.0">
+-        <columnConstraints>
+-            <ColumnConstraints minWidth="180.0" prefWidth="220.0"/>
+-            <ColumnConstraints minWidth="300.0" prefWidth="420.0"/>
+-        </columnConstraints>
+-        <rowConstraints>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-            <RowConstraints prefHeight="32.0"/>
+-        </rowConstraints>
+-        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+-        <hgap>10</hgap><vgap>10</vgap>
++        <GridPane layoutX="24.0" layoutY="72.0">
++            <columnConstraints>
++                <ColumnConstraints minWidth="220.0" prefWidth="240.0"/>
++                <ColumnConstraints minWidth="520.0" prefWidth="560.0"/>
++            </columnConstraints>
++            <rowConstraints>
++                <RowConstraints prefHeight="32.0"/>
++                <RowConstraints prefHeight="32.0"/>
++                <RowConstraints prefHeight="32.0"/>
++                <RowConstraints prefHeight="32.0"/>
++                <RowConstraints prefHeight="120.0"/>
++                <RowConstraints prefHeight="120.0"/>
++                <RowConstraints prefHeight="32.0"/>
++                <RowConstraints prefHeight="150.0"/>
++                <RowConstraints prefHeight="32.0"/>
++            </rowConstraints>
++            <padding><Insets top="8" bottom="8" left="8" right="8"/></padding>
++            <hgap>10</hgap><vgap>10</vgap>
+ 
+-        <children>
+-            <Label text="Full Name (required):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+-            <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
++            <children>
++                <!-- 2.1 Basic Information -->
++                <Label text="Full Name (required):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
++                <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+ 
+-            <Label text="Academic Status (required):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+-            <ComboBox fx:id="academicStatusCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
++                <Label text="Academic Status (required):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
++                <ComboBox fx:id="academicStatusCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+ 
+-            <Label text="Current Job Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+-            <HBox spacing="16" GridPane.rowIndex="2" GridPane.columnIndex="1">
+-                <children>
+-                    <RadioButton fx:id="employedRadio" text="Employed" toggleGroup="$jobStatusGroup"/>
+-                    <RadioButton fx:id="notEmployedRadio" text="Not Employed" toggleGroup="$jobStatusGroup" selected="true"/>
+-                </children>
+-            </HBox>
++                <Label text="Current Job Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
++                <HBox spacing="16" GridPane.rowIndex="2" GridPane.columnIndex="1">
++                    <children>
++                        <RadioButton fx:id="employedRadio" text="Employed" toggleGroup="$jobStatusGroup"/>
++                        <RadioButton fx:id="notEmployedRadio" text="Not Employed" toggleGroup="$jobStatusGroup" selected="true"/>
++                    </children>
++                </HBox>
+ 
+-            <Label text="Job Details (required if Employed):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+-            <TextField fx:id="jobDetailsField" GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
+-        </children>
+-    </GridPane>
++                <Label text="Job Details (required if Employed):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
++                <TextField fx:id="jobDetailsField" GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
++
++                <!-- 2.2 Skills & Interests -->
++                <Label text="Programming Languages Known (required):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
++                <ListView fx:id="languagesList" GridPane.rowIndex="4" GridPane.columnIndex="1" prefHeight="110.0"/>
++
++                <Label text="Databases Known (required):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
++                <ListView fx:id="databasesList" GridPane.rowIndex="5" GridPane.columnIndex="1" prefHeight="110.0"/>
++
++                <Label text="Preferred Professional Role (required):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
++                <ComboBox fx:id="roleCombo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
++
++                <!-- 2.3 Faculty Evaluation -->
++                <Label text="Comments / Journal Entries:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
++                <TextArea fx:id="commentsArea" GridPane.rowIndex="7" GridPane.columnIndex="1" prefRowCount="5"/>
++
++                <!-- 2.4 Future Services Flags -->
++                <HBox spacing="20" GridPane.rowIndex="8" GridPane.columnIndex="1">
++                    <children>
++                        <CheckBox fx:id="whitelistCheck" text="Whitelist"/>
++                        <CheckBox fx:id="blacklistCheck" text="Blacklist"/>
++                    </children>
++                </HBox>
++            </children>
++        </GridPane>
+ 
+-    <HBox spacing="12" alignment="CENTER_RIGHT"
+-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="8.0">
++    <HBox spacing="12" alignment="CENTER_RIGHT">
+         <children>
+             <Button fx:id="saveButton" text="Save" onAction="#saveStudent" prefWidth="120" defaultButton="true"/>
+-            <Button fx:id="backButton" text="Back" onAction="#goBack" prefWidth="120" cancelButton="true"/>
++            <Button fx:id="backButton" text="Exit" onAction="#goBack" prefWidth="120" cancelButton="true"/>
+         </children>
+-        <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
++        <padding>
++            <Insets top="8" right="16" bottom="8" left="16"/>
++        </padding>
++        <AnchorPane.leftAnchor>0.0</AnchorPane.leftAnchor>
++        <AnchorPane.rightAnchor>0.0</AnchorPane.rightAnchor>
++        <AnchorPane.bottomAnchor>8.0</AnchorPane.bottomAnchor>
+     </HBox>
++    </children>
+ </AnchorPane>
+Index: src/main/resources/cs151/application/StudentList.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.*?>\r\n<?import javafx.scene.layout.*?>\r\n\r\n<BorderPane xmlns=\"http://javafx.com/javafx/17\"\r\n            xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"cs151.application.StudentListController\"\r\n            prefWidth=\"800.0\" prefHeight=\"520.0\">\r\n\r\n    <center>\r\n        <TableView fx:id=\"table\">\r\n            <columns>\r\n                <TableColumn fx:id=\"full_Name\" text=\"Full Name\" prefWidth=\"220.0\"/>\r\n                <TableColumn fx:id=\"academic_Status\" text=\"Academic Status\" prefWidth=\"160.0\"/>\r\n                <TableColumn fx:id=\"current_Job_Status\" text=\"Job Status\" prefWidth=\"140.0\"/>\r\n                <TableColumn fx:id=\"job_Details\" text=\"Job Details\" prefWidth=\"260.0\"/>\r\n            </columns>\r\n        </TableView>\r\n    </center>\r\n</BorderPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/cs151/application/StudentList.fxml b/src/main/resources/cs151/application/StudentList.fxml
+--- a/src/main/resources/cs151/application/StudentList.fxml	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/src/main/resources/cs151/application/StudentList.fxml	(date 1760848430460)
+@@ -1,21 +1,77 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
++<?import javafx.geometry.Insets?>
+ <?import javafx.scene.control.*?>
+ <?import javafx.scene.layout.*?>
++<?import javafx.scene.text.*?>
+ 
+ <BorderPane xmlns="http://javafx.com/javafx/17"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cs151.application.StudentListController"
+-            prefWidth="800.0" prefHeight="520.0">
++            prefWidth="1024.0" prefHeight="680.0">
++
++    <top>
++        <!-- Search / Filter controls -->
++        <VBox spacing="6" BorderPane.alignment="CENTER">
++            <children>
++                <Label text="Search / Filter (case-insensitive)">
++                    <font><Font size="18.0"/></font>
++                </Label>
++
++                <HBox spacing="8">
++                    <children>
++                        <Label text="Name:"/>
++                        <TextField fx:id="nameSearch" prefWidth="160.0"/>
++
++                        <Label text="Status:"/>
++                        <ComboBox fx:id="statusSearch" prefWidth="140.0"/>
++
++                        <Label text="Languages (comma sep):"/>
++                        <TextField fx:id="langSearch" prefWidth="180.0"/>
++
++                        <Label text="Databases (comma sep):"/>
++                        <TextField fx:id="dbSearch" prefWidth="180.0"/>
++
++                        <Label text="Role:"/>
++                        <ComboBox fx:id="roleSearch" prefWidth="140.0"/>
++
++                        <Button fx:id="filterBtn" text="Filter"/>
++                        <Button fx:id="resetBtn" text="Reset"/>
++                    </children>
++                </HBox>
++            </children>
++            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
++        </VBox>
++    </top>
+ 
+     <center>
+-        <TableView fx:id="table">
++        <!-- Table -->
++        <TableView fx:id="table" editable="true">
+             <columns>
+-                <TableColumn fx:id="full_Name" text="Full Name" prefWidth="220.0"/>
+-                <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="160.0"/>
+-                <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="140.0"/>
+-                <TableColumn fx:id="job_Details" text="Job Details" prefWidth="260.0"/>
++                <TableColumn fx:id="full_Name" text="Full Name" prefWidth="150.0"/>
++                <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="120.0"/>
++                <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="120.0"/>
++                <TableColumn fx:id="job_Details" text="Job Details" prefWidth="150.0"/>
++                <TableColumn fx:id="programming_Languages" text="Languages" prefWidth="160.0"/>
++                <TableColumn fx:id="databases" text="Databases" prefWidth="160.0"/>
++                <TableColumn fx:id="preferred_Role" text="Role" prefWidth="120.0"/>
++                <TableColumn fx:id="comments" text="Comments" prefWidth="250.0"/>
++                <TableColumn fx:id="whitelist" text="Whitelist" prefWidth="80.0"/>
++                <TableColumn fx:id="blacklist" text="Blacklist" prefWidth="80.0"/>
+             </columns>
+         </TableView>
+     </center>
++
++    <bottom>
++        <!-- Comment + delete controls -->
++        <HBox spacing="12" BorderPane.alignment="CENTER">
++            <children>
++                <Label text="Add Comment:"/>
++                <TextArea fx:id="addCommentArea" prefRowCount="2" prefWidth="540.0"/>
++                <Button fx:id="addCommentBtn" text="Append to Selected"/>
++                <Button fx:id="deleteBtn" text="Delete Selected"/>
++            </children>
++            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
++        </HBox>
++    </bottom>
+ </BorderPane>
+Index: src/main/java/cs151/application/StudentRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package cs151.application;\r\n\r\nimport java.io.*;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.*;\r\nimport java.util.*;\r\nimport java.util.stream.Collectors;\r\n\r\npublic class StudentRepository {\r\n    private static final Path FILE = Paths.get(\"data\", \"student_profiles.csv\");\r\n    private static final List<Student> cache = new ArrayList<>();\r\n\r\n    public static List<Student> loadAll() {\r\n        cache.clear();\r\n        if (!Files.exists(FILE)) return cache;\r\n        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {\r\n            String line;\r\n            while ((line = r.readLine()) != null) {\r\n                List<String> c = parseCsv(line);\r\n                while (c.size() < 4) c.add(\"\");\r\n                Student s = new Student(c.get(0), c.get(1), c.get(2), c.get(3));\r\n                cache.add(s);\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return cache;\r\n    }\r\n\r\n    public static void saveAll() {\r\n        try {\r\n            if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());\r\n            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,\r\n                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {\r\n                for (Student s : cache) {\r\n                    w.write(csv(s.getFull_Name(), s.getAcademic_Status(),\r\n                                s.getCurrent_Job_Status(), s.getJob_Details()));\r\n                    w.newLine();\r\n                }\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    public static boolean existsByName(String name) {\r\n        String norm = Student.normalizeName(name);\r\n        return cache.stream().anyMatch(s ->\r\n                Student.normalizeName(s.getFull_Name()).equalsIgnoreCase(norm));\r\n    }\r\n\r\n    public static void add(Student s) {\r\n        cache.add(s);\r\n        sortByName();\r\n        saveAll();\r\n    }\r\n\r\n    public static List<Student> getAll() { return cache; }\r\n\r\n    public static void sortByName() { cache.sort(Comparator.naturalOrder()); }\r\n\r\n    // Helpers\r\n    private static String csv(String... cols) {\r\n        return Arrays.stream(cols).map(c -> {\r\n            String v = c == null ? \"\" : c;\r\n            if (v.contains(\",\") || v.contains(\"\\\"\")) {\r\n                v = v.replace(\"\\\"\", \"\\\"\\\"\");\r\n                v = \"\\\"\" + v + \"\\\"\";\r\n            }\r\n            return v;\r\n        }).collect(Collectors.joining(\",\"));\r\n    }\r\n    private static List<String> parseCsv(String line) {\r\n        List<String> out = new ArrayList<>();\r\n        boolean inQ = false;\r\n        StringBuilder cur = new StringBuilder();\r\n        for (int i = 0; i < line.length(); i++) {\r\n            char ch = line.charAt(i);\r\n            if (inQ) {\r\n                if (ch == '\"') {\r\n                    if (i + 1 < line.length() && line.charAt(i + 1) == '\"') { cur.append('\"'); i++; }\r\n                    else inQ = false;\r\n                } else cur.append(ch);\r\n            } else {\r\n                if (ch == ',') { out.add(cur.toString()); cur.setLength(0); }\r\n                else if (ch == '\"') inQ = true;\r\n                else cur.append(ch);\r\n            }\r\n        }\r\n        out.add(cur.toString());\r\n        return out;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/cs151/application/StudentRepository.java b/src/main/java/cs151/application/StudentRepository.java
+--- a/src/main/java/cs151/application/StudentRepository.java	(revision 36fc211307e4d9201c8936ff52932c82b971a134)
++++ b/src/main/java/cs151/application/StudentRepository.java	(date 1760848587441)
+@@ -16,9 +16,14 @@
+         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+             String line;
+             while ((line = r.readLine()) != null) {
+-                List<String> c = parseCsv(line);
+-                while (c.size() < 4) c.add("");
+-                Student s = new Student(c.get(0), c.get(1), c.get(2), c.get(3));
++                List<String> cols = parseCsv(line);
++                // Expected 10 columns
++                while (cols.size() < 10) cols.add("");
++                Student s = new Student(
++                        cols.get(0), cols.get(1), cols.get(2), cols.get(3),
++                        cols.get(4), cols.get(5), cols.get(6), cols.get(7),
++                        "true".equalsIgnoreCase(cols.get(8)), "true".equalsIgnoreCase(cols.get(9))
++                );
+                 cache.add(s);
+             }
+         } catch (IOException e) {
+@@ -33,8 +38,18 @@
+             try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
+                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+                 for (Student s : cache) {
+-                    w.write(csv(s.getFull_Name(), s.getAcademic_Status(),
+-                                s.getCurrent_Job_Status(), s.getJob_Details()));
++                    w.write(csv(
++                            s.getFull_Name(),
++                            s.getAcademic_Status(),
++                            s.getCurrent_Job_Status(),
++                            s.getJob_Details(),
++                            s.getProgramming_Languages(),
++                            s.getDatabases(),
++                            s.getPreferred_Role(),
++                            s.getComments(),
++                            String.valueOf(s.getWhitelist()),
++                            String.valueOf(s.getBlacklist())
++                    ));
+                     w.newLine();
+                 }
+             }
+@@ -49,17 +64,56 @@
+                 Student.normalizeName(s.getFull_Name()).equalsIgnoreCase(norm));
+     }
+ 
++    public static Optional<Student> findByName(String name) {
++        String norm = Student.normalizeName(name);
++        return cache.stream().filter(s ->
++                Student.normalizeName(s.getFull_Name()).equalsIgnoreCase(norm)).findFirst();
++    }
++
+     public static void add(Student s) {
+         cache.add(s);
+         sortByName();
+         saveAll();
+     }
+ 
+-    public static List<Student> getAll() { return cache; }
++    public static void delete(Student s) {
++        cache.remove(s);
++        saveAll();
++    }
++
++    public static List<Student> getAll() {
++        return cache;
++    }
++
++    public static List<Student> search(String nameQ, String statusQ,
++                                       List<String> languageAny, List<String> dbAny, String roleQ) {
++        String nq = nameQ == null ? "" : nameQ.trim().toLowerCase();
++        String rq = roleQ == null ? "" : roleQ.trim().toLowerCase();
++        String sq = statusQ == null ? "" : statusQ.trim().toLowerCase();
++
++        return cache.stream().filter(s -> {
++            boolean ok = true;
++            if (!nq.isEmpty()) ok &= Student.normalizeName(s.getFull_Name()).toLowerCase().contains(nq);
++            if (!sq.isEmpty() && !"any".equals(sq)) ok &= s.getAcademic_Status().toLowerCase().equals(sq);
++            if (!rq.isEmpty() && !"any".equals(rq)) ok &= s.getPreferred_Role().toLowerCase().equals(rq);
+ 
+-    public static void sortByName() { cache.sort(Comparator.naturalOrder()); }
++            if (languageAny != null && !languageAny.isEmpty()) {
++                String have = (s.getProgramming_Languages() == null ? "" : s.getProgramming_Languages()).toLowerCase();
++                ok &= languageAny.stream().anyMatch(t -> have.contains(t.toLowerCase()));
++            }
++            if (dbAny != null && !dbAny.isEmpty()) {
++                String have = (s.getDatabases() == null ? "" : s.getDatabases()).toLowerCase();
++                ok &= dbAny.stream().anyMatch(t -> have.contains(t.toLowerCase()));
++            }
++            return ok;
++        }).sorted().collect(Collectors.toList());
++    }
+ 
+-    // Helpers
++    public static void sortByName() {
++        cache.sort(Comparator.naturalOrder());
++    }
++
++    // CSV helpers (quote-safe)
+     private static String csv(String... cols) {
+         return Arrays.stream(cols).map(c -> {
+             String v = c == null ? "" : c;
+@@ -70,6 +124,7 @@
+             return v;
+         }).collect(Collectors.joining(","));
+     }
++
+     private static List<String> parseCsv(String line) {
+         List<String> out = new ArrayList<>();
+         boolean inQ = false;

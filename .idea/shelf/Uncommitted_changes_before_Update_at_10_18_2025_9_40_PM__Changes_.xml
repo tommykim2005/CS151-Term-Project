@@ -1,0 +1,30 @@
+<changelist name="Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]" date="1760848828233" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 10/18/2025 9:40 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/cs151/application/StudentListController.class" />
+    <option name="AFTER_PATH" value="target/classes/cs151/application/StudentListController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/StudentListController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/module-info.class" />
+    <option name="AFTER_PATH" value="target/classes/module-info.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/module-info.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/cs151/application/MainController.class" />
+    <option name="AFTER_PATH" value="target/classes/cs151/application/MainController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/MainController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/cs151/application/Student.class" />
+    <option name="AFTER_PATH" value="target/classes/cs151/application/Student.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/Student.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/cs151/application/AddStudentController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/cs151/application/StudentRepository.class" />
+  </binary>
+</changelist>
