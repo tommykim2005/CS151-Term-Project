@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import java.net.URL;
 
@@ -109,6 +110,7 @@ public class StudentListController implements Initializable {
 
                 Student output = new Student(full_Name,Academic_Status,Current_Job_Status,Job_Details,Programming_Languages,Databases,Preferred_Role,Comments,Whitelist,Blacklist);
                 items.add(output);
+                Collections.sort(items);
             }
 
         } catch (IOException ex) {

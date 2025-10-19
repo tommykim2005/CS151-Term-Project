@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="712.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.MainController">
+<AnchorPane prefHeight="712.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.MainController">
     <children>
         <Label fx:id="logo" layoutX="40.0" layoutY="20.0" text="MentorLink">
             <font>
@@ -16,10 +15,10 @@
             <font>
                 <Font size="15.0" />
             </font></Label>
-        <Label fx:id="menu_studentList" layoutX="397.0" layoutY="41.0" text="Student's List">
+        <Button fx:id="menu_studentList" layoutX="386.0" layoutY="36.0" onAction="#switchToStudentList" text="Student's List">
             <font>
                 <Font size="15.0" />
-            </font></Label>
+            </font></Button>
         <Label fx:id="menu_studentProfile" layoutX="506.0" layoutY="41.0" text="Student's profile">
             <font>
                 <Font size="15.0" />
@@ -30,6 +29,5 @@
             </font></Label>
         <Button fx:id="define_programming_language" alignment="CENTER" contentDisplay="CENTER" layoutX="182.0" layoutY="164.0" mnemonicParsing="false" onAction="#programming_language_click" prefHeight="87.0" prefWidth="322.0" text="Define new programming language" />
         <Button fx:id="create_student" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="293.0" mnemonicParsing="false" onAction="#openAddStudentPage" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" />
-        <Button fx:id="Student_List" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="418.0" mnemonicParsing="false" onAction="#switchToStudentList" prefHeight="87.0" prefWidth="322.0" text="View Student List" />
     </children>
 </AnchorPane>

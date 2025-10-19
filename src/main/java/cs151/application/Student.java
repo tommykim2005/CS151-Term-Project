@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 
-public class Student {
+public class Student implements Comparable<Student>{
     @FXML
     private final String full_Name;
 
@@ -94,5 +94,10 @@ public class Student {
         this.comments = comments;
         this.whitelist = new SimpleBooleanProperty(whitelist);
         this.blacklist = new SimpleBooleanProperty(blacklist);
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.full_Name.compareTo(o.full_Name);
     }
 }

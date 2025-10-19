@@ -1,7 +1,5 @@
 package cs151.application;
 
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,40 +14,22 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DefineLanguagesApp extends Application {
     private TextField nameField = new TextField();
-    private static List<String> languages = new ArrayList<>();
+    private TextArea notesField = new TextArea();
 
     private TableView<Language> table = new TableView<>();
     private final ObservableList<Language> data = FXCollections.observableArrayList();
 
     private static final Path FILE = Paths.get("data", "languages.csv");
 
-    static {
-        try {
-            List<String> loaded = loadStatic();
-            if (loaded == null || loaded.size() != 3) {
-                languages = new ArrayList<>();
-                languages.add("Java");
-                languages.add("Python");
-                languages.add("C++");
-            } else {
-                languages = new ArrayList<>(loaded);
-            }
-        } catch (Exception e) {
-            languages = new ArrayList<>();
-            languages.add("Java");
-            languages.add("Python");
-            languages.add("C++");
-        }
-    }
-
     @Override
     public void start(Stage stage) {
+        // Top toolbar
         ToolBar topBar = new ToolBar();
         Label title = new Label("Define Programming Languages");
         Button loadBtn = new Button("Load");
@@ -59,20 +39,30 @@ public class DefineLanguagesApp extends Application {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         topBar.getItems().addAll(title, spacer, loadBtn, saveBtn, exitBtn);
 
+        // Form
+        notesField.setPrefRowCount(3);
         GridPane form = new GridPane();
-        form.setHgap(8);
-        form.setVgap(8);
-        form.setPadding(new Insets(12));
-        form.add(new Label("Name:"), 0, 0);
+        form.setHgap(10);
+        form.setVgap(10);
+        form.add(new Label("Language Name:"), 0, 0);
         form.add(nameField, 1, 0);
+        ColumnConstraints c1 = new ColumnConstraints();
+        c1.setPercentWidth(25);
+        ColumnConstraints c2 = new ColumnConstraints();
+        c2.setPercentWidth(75);
+        form.getColumnConstraints().addAll(c1, c2);
 
+        // Buttons
         Button addBtn = new Button("Add");
+        Button updateBtn = new Button("Update");
         Button deleteBtn = new Button("Delete");
-        HBox actions = new HBox(10, addBtn, deleteBtn);
+        HBox actions = new HBox(10, addBtn, updateBtn, deleteBtn);
 
+        // Table
         TableColumn<Language, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(c -> c.getValue().name);
         nameCol.setPrefWidth(250);
+
         table.getColumns().addAll(nameCol);
         table.setItems(data);
         table.setPrefHeight(360);
@@ -85,60 +75,71 @@ public class DefineLanguagesApp extends Application {
         root.setCenter(center);
 
         addBtn.setOnAction(e -> addLanguage());
+        updateBtn.setOnAction(e -> updateLanguage());
         deleteBtn.setOnAction(e -> deleteLanguage());
         loadBtn.setOnAction(e -> {
-            List<Language> loaded = load();
-            data.setAll(loaded);
-            List<String> ls = loaded.stream().map(l -> l.name.get()).collect(Collectors.toList());
-            if (ls.size() != 3) {
-                info("Note", "Exactly 3 languages are required. Resetting to Java, Python, C++.");
-                setDefaultThree();
-                data.setAll(languages.stream().map(Language::new).collect(Collectors.toList()));
-            } else {
-                languages = new ArrayList<>(ls);
-            }
+            data.setAll(load());
             table.refresh();
         });
         saveBtn.setOnAction(e -> save(new ArrayList<>(data)));
+
         exitBtn.setOnAction(e -> stage.close());
 
-        data.setAll(languages.stream().map(Language::new).collect(Collectors.toList()));
+        table.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
+            if (sel == null) return;
+            nameField.setText(sel.name.get());
+        });
 
-        stage.setTitle("Define Languages");
-        stage.setScene(new Scene(root, 480, 520));
+        stage.setScene(new Scene(root, 800, 540));
+        stage.setTitle("MentorLink - Define Programming Languages");
         stage.show();
+    }
+
+    private void addLanguage() {
+        String name = trimOrEmpty(nameField.getText());
+        if (name.isEmpty()) {
+            info("Validation", "Language name is required.");
+            return;
+        }
+        data.add(new Language(name));
+
+        Collections.sort(data);
+
+        clearForm();
     }
 
     public static Stage open() {
         Stage stage = new Stage();
-        try {
-
-            new DefineLanguagesApp().start(stage); 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        javafx.application.Platform.runLater(() -> {
+            try {
+                new DefineLanguagesApp().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
         return stage;
     }
 
-    private void addLanguage() {
-        String n = trimOrEmpty(nameField.getText());
-        if (n.isEmpty()) {
-            info("Validation", "Name is required");
+    private void updateLanguage() {
+        Language sel = table.getSelectionModel().getSelectedItem();
+        if (sel == null) {
+            info("Selection", "Select a language to update.");
             return;
         }
-        data.add(new Language(n));
-        languages = data.stream().map(l -> l.name.get()).collect(Collectors.toList());
+        String name = trimOrEmpty(nameField.getText());
+        if (name.isEmpty()) {
+            info("Validation", "Language name is required.");
+            return;
+        }
+        sel.name.set(name);
+        table.refresh();
         clearForm();
     }
 
     private void deleteLanguage() {
         Language sel = table.getSelectionModel().getSelectedItem();
-        if (sel == null) {
-            info("Select a row", "Please select a language to delete.");
-            return;
-        }
-        data.remove(sel);
-        languages = data.stream().map(l -> l.name.get()).collect(Collectors.toList());
+        if (sel != null) data.remove(sel);
+        clearForm();
     }
 
     private void clearForm() {
@@ -152,117 +153,84 @@ public class DefineLanguagesApp extends Application {
         a.showAndWait();
     }
 
-    private void save(List<Language> langs) {
-        try {
-            if (!Files.exists(FILE.getParent()))
-                Files.createDirectories(FILE.getParent());
-            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                for (Language l : langs) {
-                    w.write(csv(l.name.get()));
-                    w.newLine();
-                }
-            }
-            languages = langs.stream().map(l -> l.name.get()).collect(Collectors.toList());
-            if (languages.size() != 3) {
-                setDefaultThree();
-            }
-            info("Saved", "Languages saved successfully.");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            info("Error", "Failed to save: " + ex.getMessage());
-        }
-    }
-
-    private static List<String> loadStatic() {
-        if (!Files.exists(FILE))
-            return null;
-        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
-            List<String> out = new ArrayList<>();
-            String line;
-            while ((line = r.readLine()) != null) {
-                String name = trimOrEmpty(parseCsv(line)[0]);
-                if (!name.isEmpty())
-                    out.add(name);
-            }
-            return out;
-        } catch (IOException ex) {
-            return null;
-        }
-    }
-
-    private List<Language> load() {
-        List<Language> out = new ArrayList<>();
-        List<String> loaded = loadStatic();
-        if (loaded == null || loaded.isEmpty()) {
-            setDefaultThree();
-            loaded = new ArrayList<>(languages);
-        }
-        for (String n : loaded)
-            out.add(new Language(n));
-        Collections.sort(out);
-        return out;
-    }
-
-    private static void setDefaultThree() {
-        languages.clear();
-        languages.add("Java");
-        languages.add("Python");
-        languages.add("C++");
-    }
-
     private static String trimOrEmpty(String s) {
         return s == null ? "" : s.trim();
     }
 
-    private static String csv(String... cols) {
+    private static String emptyToNull(String s) {
+        return (s == null || s.isEmpty()) ? null : s;
+    }
+
+    private void save(List<Language> langs) {
+        try {
+            if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());
+            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+
+                for (Language l : langs) {
+                    w.write(csv(l.name.get()));
+                    w.write("\n");
+                }
+            }
+            info("Saved", "Saved to " + FILE.toString());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            info("Error", "Could not save file.");
+        }
+    }
+
+    private ObservableList<Language> load() {
+        ObservableList<Language> out = FXCollections.observableArrayList();
+        if (!Files.exists(FILE)) return out;
+        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+
+            String line; String[] cols;
+
+            while ((line = r.readLine()) != null) {
+                cols = parseCsv(line, 4);
+                out.add(new Language(cols[0]));
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            info("Error", "Could not load file.");
+        }
+        return out;
+    }
+
+    private static String csv(String s) {
+        if (s == null) s = "";
+        boolean quote = s.contains(",") || s.contains("\"") || s.contains("\n");
+        String t = s.replace("\"", "\"\"");
+        return quote ? "\"" + t + "\"" : t;
+    }
+
+    private static String[] parseCsv(String line, int expected) {
+        String[] result = new String[expected];
+        int idx = 0, i = 0;
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < cols.length; i++) {
-            String c = cols[i] == null ? "" : cols[i];
-            if (c.contains(",") || c.contains("\"")) {
-                c = c.replace("\"", "\"\"");
-                c = "\"" + c + "\"";
-            }
-            sb.append(c);
-            if (i < cols.length - 1)
-                sb.append(',');
-        }
-        return sb.toString();
-    }
-
-    private static String[] parseCsv(String line) {
-        List<String> out = new ArrayList<>();
         boolean inQuotes = false;
-        StringBuilder cur = new StringBuilder();
-        for (int i = 0; i < line.length(); i++) {
-            char ch = line.charAt(i);
+        while (i < line.length()) {
+            char c = line.charAt(i);
             if (inQuotes) {
-                if (ch == '\"') {
-                    if (i + 1 < line.length() && line.charAt(i + 1) == '\"') {
-                        cur.append('\"');
-                        i++;
-                    } else {
-                        inQuotes = false;
-                    }
-                } else {
-                    cur.append(ch);
-                }
+                if (c == '"') {
+                    if (i + 1 < line.length() && line.charAt(i + 1) == '"') { sb.append('"'); i++; }
+                    else inQuotes = false;
+                } else sb.append(c);
             } else {
-                if (ch == ',') {
-                    out.add(cur.toString());
-                    cur.setLength(0);
-                } else if (ch == '\"') {
-                    inQuotes = true;
-                } else {
-                    cur.append(ch);
-                }
+                if (c == ',') { result[idx++] = sb.toString(); sb.setLength(0); }
+                else if (c == '"') inQuotes = true;
+                else sb.append(c);
             }
+            i++;
         }
-        out.add(cur.toString());
-        return out.toArray(new String[0]);
+        result[idx] = sb.toString();
+        for (int k = 0; k < expected; k++) if (result[k] == null) result[k] = "";
+        return result;
     }
 
-    public static class Language implements Comparable<Language> {
+
+    public static class Language implements Comparable<Language>{
         public final SimpleStringProperty name = new SimpleStringProperty("");
 
         public Language(String n) {
@@ -271,15 +239,8 @@ public class DefineLanguagesApp extends Application {
 
         @Override
         public int compareTo(Language o) {
-            return this.name.get().compareToIgnoreCase(o.name.get());
+            return this.name.get().compareTo(o.name.get());
         }
-    }
-
-    public static List<String> getLanguageList() {
-        if (languages == null || languages.size() != 3) {
-            setDefaultThree();
-        }
-        return new ArrayList<>(languages);
     }
 
     public static void main(String[] args) {

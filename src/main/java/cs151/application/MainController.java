@@ -23,7 +23,7 @@ public class MainController {
     private Label menu_search;
 
     @FXML
-    private Label menu_studentList;
+    private Button menu_studentList;
 
     @FXML
     private Label menu_studentProfile;
@@ -54,13 +54,22 @@ public class MainController {
     private Parent root;
 
     public void switchToStudentList(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("StudentList.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Student List");
-        scene = new Scene(root);
+//        root = FXMLLoader.load(getClass().getResource("StudentList.fxml"));
+//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setTitle("Student List");
+//        scene = new Scene(root);
+//
+//        stage.setScene(scene);
+//        stage.show();
 
-        stage.setScene(scene);
-        stage.show();
+        Stage SLstage = new Stage();
+        FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
+        SLstage.setTitle("Student List");
+        SLstage.setScene(new Scene(root.load()));
+        SLstage.show();
+
+        menu_studentList.setDisable(true);
+        SLstage.setOnHidden(e -> menu_studentList.setDisable(false));
     }
 
     @FXML
@@ -70,7 +79,7 @@ public class MainController {
         javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) e.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-        System.out.println("openAddStudentPage fired");
+        //System.out.println("openAddStudentPage fired");
 
     }
 
