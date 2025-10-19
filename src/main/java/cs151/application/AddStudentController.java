@@ -124,7 +124,7 @@ public class AddStudentController {
         if (StudentRepository.existsByName(name)) {
             alert("Duplicate", "A student with the same name already exists."); return;
         }
-
+    //test
         String comments = normalize(commentsArea.getText());
         if (!comments.isEmpty()) {
             String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);

@@ -10,7 +10,6 @@
             fx:controller="cs151.application.AddStudentController"
             prefHeight="640.0" prefWidth="860.0">
 
-    <!-- Inject ToggleGroup so radios are mutually exclusive -->
     <fx:define>
         <ToggleGroup fx:id="jobStatusGroup"/>
     </fx:define>
