@@ -1,44 +1,98 @@
 package cs151.application;
 
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
 
-public class Student implements Comparable<Student> {
-    private final StringProperty full_Name = new SimpleStringProperty("");
-    private final StringProperty academic_Status = new SimpleStringProperty("");
-    private final StringProperty current_Job_Status = new SimpleStringProperty("");
-    private final StringProperty job_Details = new SimpleStringProperty("");
+public class Student {
+    @FXML
+    private final String full_Name;
 
-    public Student() {}
+    @FXML
+    private final String academic_Status;
 
-    public Student(String fullName, String academic, String currentJob, String jobDetails) {
-        setFull_Name(fullName);
-        setAcademic_Status(academic);
-        setCurrent_Job_Status(currentJob);
-        setJob_Details(jobDetails);
+    @FXML
+    private final String current_Job_Status;
+
+    @FXML
+    private final String job_Details;
+
+    @FXML
+    private final String programming_Languages;
+
+    @FXML
+    private final String databases;
+
+    @FXML
+    private final String preferred_Role;
+
+    @FXML
+    private final String comments;
+
+    @FXML
+    private final BooleanProperty whitelist;
+
+    @FXML
+    private final BooleanProperty blacklist;
+
+    public BooleanProperty whitelistProperty() {
+        return this.whitelist;
     }
 
-    public static String normalizeName(String name) { return name == null ? "" : name.trim(); }
+    public Boolean isWhitelist() {
+        return this.whitelist.get();
+    }
 
-    public String getFull_Name() { return full_Name.get(); }
-    public void setFull_Name(String v) { full_Name.set(v); }
-    public StringProperty full_NameProperty() { return full_Name; }
+    public BooleanProperty blacklistProperty() {
+        return this.blacklist;
+    }
 
-    public String getAcademic_Status() { return academic_Status.get(); }
-    public void setAcademic_Status(String v) { academic_Status.set(v); }
-    public StringProperty academic_StatusProperty() { return academic_Status; }
+    public Boolean isBlacklist() {
+        return this.blacklist.get();
+    }
 
-    public String getCurrent_Job_Status() { return current_Job_Status.get(); }
-    public void setCurrent_Job_Status(String v) { current_Job_Status.set(v); }
-    public StringProperty current_Job_StatusProperty() { return current_Job_Status; }
+    public String getComments() {
+        return this.comments;
+    }
 
-    public String getJob_Details() { return job_Details.get(); }
-    public void setJob_Details(String v) { job_Details.set(v); }
-    public StringProperty job_DetailsProperty() { return job_Details; }
+    public String getPreferred_Role() {
+        return this.preferred_Role;
+    }
 
-    @Override
-    public int compareTo(Student o) {
-        String a = normalizeName(getFull_Name());
-        String b = normalizeName(o.getFull_Name());
-        return a.compareToIgnoreCase(b);
+    public String getDatabases() {
+        return this.databases;
+    }
+
+    public String getProgramming_Languages() {
+        return this.programming_Languages;
+    }
+
+    public String getJob_Details() {
+        return this.job_Details;
+    }
+
+    public String getCurrent_Job_Status() {
+        return this.current_Job_Status;
+    }
+
+    public String getAcademic_Status() {
+        return this.academic_Status;
+    }
+
+    public String getFull_Name() {
+        return this.full_Name;
+    }
+
+    public Student(String full_Name, String academic_Status, String current_Job_Status, String job_Details, String programming_Languages, String databases, String preferred_Role, String comments, Boolean whitelist, Boolean blacklist) {
+        this.full_Name = full_Name;
+        this.academic_Status = academic_Status;
+        this.current_Job_Status = current_Job_Status;
+        this.job_Details = job_Details;
+        this.programming_Languages = programming_Languages;
+        this.databases = databases;
+        this.preferred_Role = preferred_Role;
+        this.comments = comments;
+        this.whitelist = new SimpleBooleanProperty(whitelist);
+        this.blacklist = new SimpleBooleanProperty(blacklist);
     }
 }

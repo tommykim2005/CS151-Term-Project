@@ -1,42 +1,81 @@
 package cs151.application;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
 
 import java.io.IOException;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class AddStudentController {
 
     // 2.1 Basic Information
-    @FXML private TextField fullNameField;                                // required
-    @FXML private ComboBox<String> academicStatusCombo;                   // required [Freshman, Sophomore, Junior, Senior, Graduate]
-    @FXML private RadioButton employedRadio;                              // Employed
-    @FXML private RadioButton notEmployedRadio;                           // Not Employed
-    @FXML private ToggleGroup jobStatusGroup;                             // injected in FXML <fx:define>
-    @FXML private TextField jobDetailsField;                              // required if employed
+    @FXML private TextField fullNameField;
+    @FXML private ComboBox<String> academicStatusCombo;
+    @FXML private RadioButton employedRadio;
+    @FXML private RadioButton notEmployedRadio;
+    @FXML private ToggleGroup jobStatusGroup;
+    @FXML private TextField jobDetailsField;
 
+    // 2.2 Skills & Interests
+    @FXML private ListView<String> languagesList;
+    @FXML private ListView<String> databasesList;
+    @FXML private ComboBox<String> roleCombo;
+
+    // 2.3 Faculty Evaluation
+    @FXML private TextArea commentsArea;
+
+    // 2.4 Future Services Flags
+    @FXML private CheckBox whitelistCheck;
+    @FXML private CheckBox blacklistCheck;
+
+    // Buttons
     @FXML private Button saveButton;
     @FXML private Button backButton;
 
     @FXML
     public void initialize() {
+        // Academic Status
         academicStatusCombo.setItems(FXCollections.observableArrayList(
                 "Freshman", "Sophomore", "Junior", "Senior", "Graduate"
         ));
 
-        // Enable/disable Job Details based on job status
-        jobStatusGroup.selectedToggleProperty().addListener((obs, oldT, newT) -> {
+        jobStatusGroup.selectedToggleProperty().addListener((obs, o, n) -> {
             boolean employed = employedRadio.isSelected();
             jobDetailsField.setDisable(!employed);
             if (!employed) jobDetailsField.clear();
         });
 
-        // Safety net if ToggleGroup didn’t inject for any reason
+        List<String> langs;
+        try {
+            langs = (List<String>)Class.forName("cs151.application.DefineLanguagesApp")
+                    .getMethod("getLanguageList")
+                    .invoke(null);
+        } catch (Throwable t) {
+            langs = Arrays.asList("Java", "Python", "C++");
+        }
+        languagesList.setItems(FXCollections.observableArrayList(langs));
+        languagesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        databasesList.setItems(FXCollections.observableArrayList(
+                "MySQL", "Postgres", "MongoDB"
+        ));
+        databasesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        roleCombo.setItems(FXCollections.observableArrayList(
+                "Front-End", "Back-End", "Full-Stack", "Data", "Other"
+        ));
+
+        whitelistCheck.selectedProperty().addListener((o, ov, nv) -> { if (nv) blacklistCheck.setSelected(false); });
+        blacklistCheck.selectedProperty().addListener((o, ov, nv) -> { if (nv) whitelistCheck.setSelected(false); });
+
         if (jobStatusGroup == null) {
             jobStatusGroup = new ToggleGroup();
             employedRadio.setToggleGroup(jobStatusGroup);
@@ -46,26 +85,53 @@ public class AddStudentController {
 
     @FXML
     private void saveStudent() {
-        String name = Student.normalizeName(fullNameField.getText());
+        String name = normalize(fullNameField.getText());
         if (name.isEmpty()) { alert("Validation", "Full Name is required."); return; }
 
-        String academic = valueOf(academicStatusCombo);
+        String academic = vOf(academicStatusCombo);
         if (academic.isEmpty()) { alert("Validation", "Academic Status is required."); return; }
 
         String jobStatus = employedRadio.isSelected() ? "Employed" : "Not Employed";
-        String jobDetails = jobDetailsField.getText() == null ? "" : jobDetailsField.getText().trim();
+        String jobDetails = normalize(jobDetailsField.getText());
         if ("Employed".equals(jobStatus) && jobDetails.isEmpty()) {
             alert("Validation", "Job Details is required when Employed."); return;
         }
 
-        // Duplicate prevention (trimmed full name, case-insensitive)
-        StudentRepository.loadAll();
+        List<String> selectedLangs = new ArrayList<>(languagesList.getSelectionModel().getSelectedItems());
+        if (selectedLangs.isEmpty()) { alert("Validation", "Select at least one Programming Language."); return; }
+
+        List<String> selectedDBs = new ArrayList<>(databasesList.getSelectionModel().getSelectedItems());
+        if (selectedDBs.isEmpty()) { alert("Validation", "Select at least one Database."); return; }
+
+        String role = vOf(roleCombo);
+        if (role.isEmpty()) { alert("Validation", "Preferred Professional Role is required."); return; }
+
+        boolean white = whitelistCheck.isSelected();
+        boolean black = blacklistCheck.isSelected();
+        if (white && black) { alert("Validation", "Whitelist and Blacklist are mutually exclusive."); return; }
+
         if (StudentRepository.existsByName(name)) {
             alert("Duplicate", "A student with the same name already exists."); return;
         }
 
-        Student s = new Student(name, academic, jobStatus, jobDetails);
-        StudentRepository.add(s);
+        String comments = normalize(commentsArea.getText());
+        if (!comments.isEmpty()) {
+            String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+            comments = today + ": " + comments;
+        }
+
+        StudentRepository.appendRow(
+                name,
+                academic,
+                jobStatus,
+                jobDetails,
+                String.join(";", selectedLangs),
+                String.join(";", selectedDBs),
+                role,
+                comments,
+                white,
+                black
+        );
 
         alert("Saved", "Student profile saved.");
         clearForm();
@@ -77,21 +143,27 @@ public class AddStudentController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    // Helpers
+    private static String normalize(String s) { return s == null ? "" : s.trim(); }
+    private static String vOf(ComboBox<String> cb) { String v = cb.getValue(); return v == null ? "" : v.trim(); }
 
     private void clearForm() {
         fullNameField.clear();
         academicStatusCombo.getSelectionModel().clearSelection();
         notEmployedRadio.setSelected(true);
         jobDetailsField.clear();
-    }
-
-    private String valueOf(ComboBox<String> cb) {
-        String v = cb.getValue();
-        return v == null ? "" : v.trim();
+        languagesList.getSelectionModel().clearSelection();
+        databasesList.getSelectionModel().clearSelection();
+        roleCombo.getSelectionModel().clearSelection();
+        commentsArea.clear();
+        whitelistCheck.setSelected(false);
+        blacklistCheck.setSelected(false);
     }
 
     private void alert(String head, String msg) {

@@ -10,12 +10,25 @@
 
     <center>
         <TableView fx:id="table">
-            <columns>
-                <TableColumn fx:id="full_Name" text="Full Name" prefWidth="220.0"/>
-                <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="160.0"/>
-                <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="140.0"/>
-                <TableColumn fx:id="job_Details" text="Job Details" prefWidth="260.0"/>
-            </columns>
+<columns>
+    <TableColumn fx:id="full_Name" text="Full Name" prefWidth="220.0"/>
+    <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="160.0"/>
+    <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="140.0"/>
+    <TableColumn fx:id="job_Details" text="Job Details" prefWidth="220.0"/>
+
+    <!-- Section 2.2 -->
+    <TableColumn fx:id="programming_Languages" text="Languages" prefWidth="160.0"/>
+    <TableColumn fx:id="databases" text="Databases" prefWidth="160.0"/>
+    <TableColumn fx:id="preferred_Role" text="Role" prefWidth="120.0"/>
+
+    <!-- Section 2.3 -->
+    <TableColumn fx:id="comments" text="Comments" prefWidth="260.0"/>
+
+    <!-- Section 2.4 -->
+    <TableColumn fx:id="whitelist" text="Whitelist" prefWidth="90.0"/>
+    <TableColumn fx:id="blacklist" text="Blacklist" prefWidth="90.0"/>
+</columns>
+
         </TableView>
     </center>
 </BorderPane>

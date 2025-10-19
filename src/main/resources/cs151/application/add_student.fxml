@@ -8,52 +8,76 @@
 <AnchorPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="cs151.application.AddStudentController"
-            prefHeight="520.0" prefWidth="720.0">
+            prefHeight="640.0" prefWidth="860.0">
 
+    <!-- Inject ToggleGroup so radios are mutually exclusive -->
     <fx:define>
         <ToggleGroup fx:id="jobStatusGroup"/>
     </fx:define>
 
-    <Label text="Create Student (Section 2.1)"
+    <Label text="Create Student"
            AnchorPane.topAnchor="16.0" AnchorPane.leftAnchor="16.0">
         <font><Font size="22.0"/></font>
     </Label>
 
-    <GridPane AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="16.0"
-              AnchorPane.rightAnchor="16.0" AnchorPane.bottomAnchor="72.0">
-        <columnConstraints>
-            <ColumnConstraints minWidth="180.0" prefWidth="220.0"/>
-            <ColumnConstraints minWidth="300.0" prefWidth="420.0"/>
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints prefHeight="32.0"/>
-            <RowConstraints prefHeight="32.0"/>
-            <RowConstraints prefHeight="32.0"/>
-            <RowConstraints prefHeight="32.0"/>
-        </rowConstraints>
-        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
-        <hgap>10</hgap><vgap>10</vgap>
+    <!-- Scrollable form area -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="16.0"
+                AnchorPane.rightAnchor="16.0" AnchorPane.bottomAnchor="72.0">
+        <content>
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints minWidth="240.0" prefWidth="280.0"/>
+                    <ColumnConstraints minWidth="480.0" prefWidth="540.0"/>
+                </columnConstraints>
+                <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+                <hgap>10</hgap>
+                <vgap>10</vgap>
 
-        <children>
-            <Label text="Full Name (required):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-            <Label text="Academic Status (required):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="academicStatusCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-            <Label text="Current Job Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <HBox spacing="16" GridPane.rowIndex="2" GridPane.columnIndex="1">
                 <children>
-                    <RadioButton fx:id="employedRadio" text="Employed" toggleGroup="$jobStatusGroup"/>
-                    <RadioButton fx:id="notEmployedRadio" text="Not Employed" toggleGroup="$jobStatusGroup" selected="true"/>
+                    <Label text="Full Name (required):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Academic Status (required):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="academicStatusCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Current Job Status:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <HBox spacing="16" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                        <children>
+                            <RadioButton fx:id="employedRadio" text="Employed" toggleGroup="$jobStatusGroup"/>
+                            <RadioButton fx:id="notEmployedRadio" text="Not Employed" toggleGroup="$jobStatusGroup" selected="true"/>
+                        </children>
+                    </HBox>
+
+                    <Label text="Job Details (required if Employed):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="jobDetailsField" GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
+
+                    <Label text="Programming Languages Known (required):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <ListView fx:id="languagesList" GridPane.rowIndex="4" GridPane.columnIndex="1" prefHeight="110.0"/>
+
+                    <Label text="Databases Known (required):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ListView fx:id="databasesList" GridPane.rowIndex="5" GridPane.columnIndex="1" prefHeight="110.0"/>
+
+                    <Label text="Preferred Professional Role (required):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="roleCombo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <Label text="Comments / Journal Entries:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <TextArea fx:id="commentsArea" GridPane.rowIndex="7" GridPane.columnIndex="1" prefRowCount="5"
+                              promptText="Add initial comment. (Auto date-stamped on save)"/>
+
+                    <Label text="Future Services Flags:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <HBox spacing="20" GridPane.rowIndex="8" GridPane.columnIndex="1">
+                        <children>
+                            <CheckBox fx:id="whitelistCheck" text="Whitelist"/>
+                            <CheckBox fx:id="blacklistCheck" text="Blacklist"/>
+                        </children>
+                    </HBox>
                 </children>
-            </HBox>
+            </GridPane>
+        </content>
+    </ScrollPane>
 
-            <Label text="Job Details (required if Employed):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="jobDetailsField" GridPane.rowIndex="3" GridPane.columnIndex="1" disable="true"/>
-        </children>
-    </GridPane>
-
+    <!-- Bottom action bar (always visible) -->
     <HBox spacing="12" alignment="CENTER_RIGHT"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="8.0">
         <children>

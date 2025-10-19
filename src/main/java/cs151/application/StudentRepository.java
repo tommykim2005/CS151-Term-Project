@@ -3,74 +3,100 @@ package cs151.application;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class StudentRepository {
-    private static final Path FILE = Paths.get("data", "student_profiles.csv");
-    private static final List<Student> cache = new ArrayList<>();
 
-    public static List<Student> loadAll() {
-        cache.clear();
-        if (!Files.exists(FILE)) return cache;
-        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
-            String line;
-            while ((line = r.readLine()) != null) {
-                List<String> c = parseCsv(line);
-                while (c.size() < 4) c.add("");
-                Student s = new Student(c.get(0), c.get(1), c.get(2), c.get(3));
-                cache.add(s);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    // Match StudentListController's path exactly
+    private static final Path FILE = Paths.get("data", "student_data_test.csv");
+
+    private static void ensureDir() throws IOException {
+        Path parent = FILE.getParent();
+        if (parent != null && !Files.exists(parent)) {
+            Files.createDirectories(parent);
         }
-        return cache;
     }
 
-    public static void saveAll() {
+    /** Check duplicate by trimmed, case-insensitive full name. */
+    public static boolean existsByName(String fullName) {
+        String needle = normalize(fullName);
         try {
-            if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());
-            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                for (Student s : cache) {
-                    w.write(csv(s.getFull_Name(), s.getAcademic_Status(),
-                                s.getCurrent_Job_Status(), s.getJob_Details()));
-                    w.newLine();
+            if (!Files.exists(FILE)) return false;
+            try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+                String line;
+                while ((line = r.readLine()) != null) {
+                    String[] f = parseCsvLine(line, 10);
+                    if (normalize(f[0]).equals(needle)) {
+                        return true;
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static boolean existsByName(String name) {
-        String norm = Student.normalizeName(name);
-        return cache.stream().anyMatch(s ->
-                Student.normalizeName(s.getFull_Name()).equalsIgnoreCase(norm));
-    }
-
-    public static void add(Student s) {
-        cache.add(s);
-        sortByName();
-        saveAll();
-    }
-
-    public static List<Student> getAll() { return cache; }
-
-    public static void sortByName() { cache.sort(Comparator.naturalOrder()); }
-
-    // Helpers
-    private static String csv(String... cols) {
-        return Arrays.stream(cols).map(c -> {
-            String v = c == null ? "" : c;
-            if (v.contains(",") || v.contains("\"")) {
-                v = v.replace("\"", "\"\"");
-                v = "\"" + v + "\"";
+    /** Append a full 10-column row (Sections 2.1 - 2.4). */
+    public static void appendRow(String fullName,
+                                 String academicStatus,
+                                 String currentJobStatus,
+                                 String jobDetails,
+                                 String programmingLanguages,
+                                 String databases,
+                                 String preferredRole,
+                                 String comments,
+                                 boolean whitelist,
+                                 boolean blacklist) {
+        try {
+            ensureDir();
+            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+                String row = toCsv(
+                        nvl(fullName),
+                        nvl(academicStatus),
+                        nvl(currentJobStatus),
+                        nvl(jobDetails),
+                        nvl(programmingLanguages),
+                        nvl(databases),
+                        nvl(preferredRole),
+                        nvl(comments),
+                        String.valueOf(whitelist),
+                        String.valueOf(blacklist)
+                );
+                w.write(row);
+                w.newLine();
             }
-            return v;
-        }).collect(Collectors.joining(","));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    private static List<String> parseCsv(String line) {
+
+    // ------------- Helpers -------------
+
+    private static String nvl(String s) { return s == null ? "" : s; }
+    private static String normalize(String s) { return s == null ? "" : s.trim().toLowerCase(Locale.ROOT); }
+
+    private static String toCsv(String... cols) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < cols.length; i++) {
+            if (i > 0) sb.append(',');
+            sb.append(quoteCsv(cols[i]));
+        }
+        return sb.toString();
+    }
+
+    private static String quoteCsv(String v) {
+        if (v == null) return "";
+        boolean needs = v.contains(",") || v.contains("\"") || v.contains("\n") || v.contains("\r");
+        if (!needs) return v;
+        return '"' + v.replace("\"", "\"\"") + '"';
+    }
+
+    /** Simple CSV parser into at least minCols columns. */
+    private static String[] parseCsvLine(String line, int minCols) {
         List<String> out = new ArrayList<>();
         boolean inQ = false;
         StringBuilder cur = new StringBuilder();
@@ -80,7 +106,9 @@ public class StudentRepository {
                 if (ch == '"') {
                     if (i + 1 < line.length() && line.charAt(i + 1) == '"') { cur.append('"'); i++; }
                     else inQ = false;
-                } else cur.append(ch);
+                } else {
+                    cur.append(ch);
+                }
             } else {
                 if (ch == ',') { out.add(cur.toString()); cur.setLength(0); }
                 else if (ch == '"') inQ = true;
@@ -88,6 +116,7 @@ public class StudentRepository {
             }
         }
         out.add(cur.toString());
-        return out;
+        while (out.size() < minCols) out.add("");
+        return out.toArray(new String[0]);
     }
 }

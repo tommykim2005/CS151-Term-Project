@@ -112,9 +112,8 @@ public class DefineLanguagesApp extends Application {
     public static Stage open() {
         Stage stage = new Stage();
         try {
-            // start(...) is already on the JavaFX Application Thread when called from a
-            // controller event
-            new DefineLanguagesApp().start(stage); // your start() should set a Scene and call stage.show()
+
+            new DefineLanguagesApp().start(stage); 
         } catch (Exception e) {
             e.printStackTrace();
         }
