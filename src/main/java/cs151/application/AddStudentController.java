@@ -4,81 +4,136 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddStudentController {
 
-    @FXML private TextField fullNameField;
-    @FXML private TextField academicStatusField;
-    @FXML private TextField currentJobStatusField;
-    @FXML private TextField jobDetailsField;
-    @FXML private ListView<String> languageList;
-    @FXML private TextField databasesField;
-    @FXML private TextField preferredRoleField;
-    @FXML private TextArea commentsArea;
+    // 2.1 Basic Information
+    @FXML private TextField fullNameField;                                // required
+    @FXML private ComboBox<String> academicStatusCombo;                   // required [Freshman, Sophomore, Junior, Senior, Graduate]
+    @FXML private RadioButton employedRadio;                              // Employed
+    @FXML private RadioButton notEmployedRadio;                           // Not Employed
+    @FXML private ToggleGroup jobStatusGroup;                             // group
+    @FXML private TextField jobDetailsField;                              // required if employed
+
+    // 2.2 Skills & Interests
+    @FXML private ListView<String> languagesList;                         // multi-select from DefineLanguagesApp
+    @FXML private ListView<String> databasesList;                         // multi-select hard-coded
+    @FXML private ComboBox<String> roleCombo;                             // required [Front-End, Back-End, Full-Stack, Data, Other]
+
+    // 2.3 Faculty Evaluation
+    @FXML private TextArea commentsArea;                                  // multi-line, can append later
+
+    // 2.4 Future Services Flags (mutually exclusive)
     @FXML private CheckBox whitelistCheck;
     @FXML private CheckBox blacklistCheck;
 
     @FXML private Button saveButton;
     @FXML private Button backButton;
 
-    private final ObservableList<String> availableLanguages = FXCollections.observableArrayList();
-    private static final Path FILE = Paths.get("data", "student_profiles.csv");
-
     @FXML
     public void initialize() {
+        // Academic status
+        academicStatusCombo.setItems(FXCollections.observableArrayList(
+                "Freshman", "Sophomore", "Junior", "Senior", "Graduate"
+        ));
+
+        // Job status radios in a ToggleGroup (set in FXML) + job details enable/disable
+        jobStatusGroup.selectedToggleProperty().addListener((obs, oldT, newT) -> {
+            boolean employed = employedRadio.isSelected();
+            jobDetailsField.setDisable(!employed);
+            if (!employed) jobDetailsField.clear();
+        });
+
+        // Languages (exactly the 3 defined)
+        List<String> langs;
         try {
-            availableLanguages.setAll(DefineLanguagesApp.getLanguageList());
+            langs = DefineLanguagesApp.getLanguageList();
         } catch (Exception e) {
-            availableLanguages.setAll("Java", "Python", "C++");
+            langs = Arrays.asList("Java", "Python", "C++");
         }
-        languageList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        languageList.setItems(availableLanguages);
+        languagesList.setItems(FXCollections.observableArrayList(langs));
+        languagesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // Databases (hard-coded, can add more)
+        databasesList.setItems(FXCollections.observableArrayList(
+                "MySQL", "Postgres", "MongoDB"
+        ));
+        databasesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // Roles
+        roleCombo.setItems(FXCollections.observableArrayList(
+                "Front-End", "Back-End", "Full-Stack", "Data", "Other"
+        ));
+
+        // Mutual exclusivity
+        whitelistCheck.selectedProperty().addListener((o, ov, nv) -> {
+            if (nv) blacklistCheck.setSelected(false);
+        });
+        blacklistCheck.selectedProperty().addListener((o, ov, nv) -> {
+            if (nv) whitelistCheck.setSelected(false);
+        });
     }
 
     @FXML
     private void saveStudent() {
-        String name = text(fullNameField);
-        String academic = text(academicStatusField);
-        String currentJob = text(currentJobStatusField);
-        String jobDetails = text(jobDetailsField);
-        String languages = String.join(";", languageList.getSelectionModel().getSelectedItems());
-        String databases = text(databasesField);
-        String preferredRole = text(preferredRoleField);
-        String comments = text(commentsArea);
-        boolean whitelist = whitelistCheck.isSelected();
-        boolean blacklist = blacklistCheck.isSelected();
+        // Required validations
+        String name = Student.normalizeName(fullNameField.getText());
+        if (name.isEmpty()) { alert("Validation", "Full Name is required."); return; }
 
-        if (name.isEmpty() || languages.isEmpty()) {
-            showAlert("Missing Fields", "Full name and at least one language are required.");
+        String academic = valueOf(academicStatusCombo);
+        if (academic.isEmpty()) { alert("Validation", "Academic Status is required."); return; }
+
+        String jobStatus = employedRadio.isSelected() ? "Employed" : "Not Employed";
+        String jobDetails = jobDetailsField.getText() == null ? "" : jobDetailsField.getText().trim();
+        if ("Employed".equals(jobStatus) && jobDetails.isEmpty()) {
+            alert("Validation", "Job Details is required when Employed.");
             return;
         }
 
-        try {
-            if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());
-            try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                w.write(csv(name, academic, currentJob, jobDetails, languages, databases, preferredRole, comments,
-                        Boolean.toString(whitelist), Boolean.toString(blacklist)));
-                w.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to save: " + e.getMessage());
+        List<String> selectedLangs = new ArrayList<>(languagesList.getSelectionModel().getSelectedItems());
+        if (selectedLangs.isEmpty()) { alert("Validation", "Select at least one Programming Language."); return; }
+
+        List<String> selectedDBs = new ArrayList<>(databasesList.getSelectionModel().getSelectedItems());
+        if (selectedDBs.isEmpty()) { alert("Validation", "Select at least one Database."); return; }
+
+        String role = valueOf(roleCombo);
+        if (role.isEmpty()) { alert("Validation", "Preferred Professional Role is required."); return; }
+
+        boolean white = whitelistCheck.isSelected();
+        boolean black = blacklistCheck.isSelected();
+        if (white && black) { alert("Validation", "Whitelist and Blacklist are mutually exclusive."); return; }
+
+        // Duplicate prevention by trimmed full name
+        StudentRepository.loadAll(); // ensure cache is fresh
+        if (StudentRepository.existsByName(name)) {
+            alert("Duplicate", "A student with the same name already exists.");
             return;
         }
 
-        showAlert("Success", "Student profile saved.");
-        clearFields();
+        Student s = new Student(
+                name,
+                academic,
+                jobStatus,
+                jobDetails,
+                String.join(";", selectedLangs),
+                String.join(";", selectedDBs),
+                role,
+                commentsArea.getText() == null ? "" : commentsArea.getText().trim(),
+                white,
+                black
+        );
+
+        StudentRepository.add(s);
+        alert("Saved", "Student profile saved.");
+        clearForm();
     }
 
     @FXML
@@ -92,41 +147,29 @@ public class AddStudentController {
         }
     }
 
-    private void clearFields() {
+    private void clearForm() {
         fullNameField.clear();
-        academicStatusField.clear();
-        currentJobStatusField.clear();
+        academicStatusCombo.getSelectionModel().clearSelection();
+        notEmployedRadio.setSelected(true);
         jobDetailsField.clear();
-        databasesField.clear();
-        preferredRoleField.clear();
+        languagesList.getSelectionModel().clearSelection();
+        databasesList.getSelectionModel().clearSelection();
+        roleCombo.getSelectionModel().clearSelection();
         commentsArea.clear();
         whitelistCheck.setSelected(false);
         blacklistCheck.setSelected(false);
-        languageList.getSelectionModel().clearSelection();
     }
 
-    private static String text(TextInputControl c) { return c == null ? "" : c.getText().trim(); }
-    private static String text(TextArea c) { return c == null ? "" : c.getText().trim(); }
-
-    private void showAlert(String title, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
+    private String valueOf(ComboBox<String> cb) {
+        String v = cb.getValue();
+        return v == null ? "" : v.trim();
     }
 
-    private static String csv(String... cols) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < cols.length; i++) {
-            String c = cols[i] == null ? "" : cols[i];
-            if (c.contains(",") || c.contains("\"")) {
-                c = c.replace("\"", "\"\"");
-                c = "\"" + c + "\"";
-            }
-            sb.append(c);
-            if (i < cols.length - 1) sb.append(',');
-        }
-        return sb.toString();
+    // CHANGED: return type is void; no return value
+    private void alert(String head, String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
+        a.setHeaderText(head);
+        a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        a.showAndWait();
     }
 }

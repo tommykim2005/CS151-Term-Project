@@ -46,31 +46,27 @@ import javafx.scene.Scene;
         plStage.setOnHidden(e -> define_programming_language.setDisable(false));
     }
 
-        @FXML
-        private void switchToStudentList(ActionEvent event) throws IOException{
-            Stage SLstage = new Stage();
-            FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
-            SLstage.setTitle("Student List");
-            SLstage.setScene(new Scene(root.load()));
-            SLstage.show();
+@FXML
+private void switchToStudentList() throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentList.fxml"));
+    Scene scene = new Scene(loader.load());
+    Stage stage = (Stage) menu_studentList.getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
+}
 
-            menu_studentList.setDisable(true);
-            SLstage.setOnHidden(e -> menu_studentList.setDisable(false));
-        }
 
 
 @FXML
-private void openAddStudentPage() {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs151/application/add_student.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) create_student.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+private void openAddStudentPage() throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("add_student.fxml"));
+    Stage stage = new Stage();
+    stage.setScene(new Scene(loader.load()));
+    stage.setTitle("Add Student");
+    stage.show();
 }
+
+
 
 
 

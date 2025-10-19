@@ -2,17 +2,26 @@ package cs151.application;
 
 import javafx.beans.property.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Student implements Comparable<Student> {
+    // Properties
     private final StringProperty full_Name = new SimpleStringProperty("");
-    private final StringProperty academic_Status = new SimpleStringProperty("");
-    private final StringProperty current_Job_Status = new SimpleStringProperty("");
+    private final StringProperty academic_Status = new SimpleStringProperty(""); // Freshman, Sophomore, Junior, Senior, Graduate
+    private final StringProperty current_Job_Status = new SimpleStringProperty(""); // Employed, Not Employed
     private final StringProperty job_Details = new SimpleStringProperty("");
-    private final StringProperty programming_Languages = new SimpleStringProperty("");
-    private final StringProperty databases = new SimpleStringProperty("");
-    private final StringProperty preferred_Role = new SimpleStringProperty("");
-    private final StringProperty comments = new SimpleStringProperty("");
+    private final StringProperty programming_Languages = new SimpleStringProperty(""); // semicolon-separated
+    private final StringProperty databases = new SimpleStringProperty("");             // semicolon-separated
+    private final StringProperty preferred_Role = new SimpleStringProperty("");        // Front-End, Back-End, Full-Stack, Data, Other
+    private final StringProperty comments = new SimpleStringProperty("");              // multiple entries appended with delimiter
     private final BooleanProperty whitelist = new SimpleBooleanProperty(false);
     private final BooleanProperty blacklist = new SimpleBooleanProperty(false);
+
+    public static final String COMMENT_DELIM = "|||";
+    public static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ISO_LOCAL_DATE;
 
     public Student() {}
 
@@ -30,6 +39,7 @@ public class Student implements Comparable<Student> {
         setBlacklist(black);
     }
 
+    // Getters/Setters & properties
     public String getFull_Name() { return full_Name.get(); }
     public void setFull_Name(String v) { full_Name.set(v); }
     public StringProperty full_NameProperty() { return full_Name; }
@@ -70,10 +80,34 @@ public class Student implements Comparable<Student> {
     public void setBlacklist(boolean v) { blacklist.set(v); }
     public BooleanProperty blacklistProperty() { return blacklist; }
 
+    // Business rules helpers
+    public static String normalizeName(String name) {
+        return name == null ? "" : name.trim();
+    }
+
+    public void addComment(String text) {
+        String t = text == null ? "" : text.trim();
+        if (t.isEmpty()) return;
+        String stamped = "[" + LocalDate.now().format(DATE_FMT) + "] " + t;
+        String existing = getComments();
+        if (existing == null || existing.isEmpty()) {
+            setComments(stamped);
+        } else {
+            setComments(existing + COMMENT_DELIM + stamped);
+        }
+    }
+
+    public String commentsMultiline() {
+        String c = getComments();
+        if (c == null || c.isEmpty()) return "";
+        return Arrays.stream(c.split("\\Q" + COMMENT_DELIM + "\\E"))
+                .map(String::trim).collect(Collectors.joining("\n"));
+    }
+
     @Override
     public int compareTo(Student o) {
-        String a = getFull_Name() == null ? "" : getFull_Name();
-        String b = o.getFull_Name() == null ? "" : o.getFull_Name();
+        String a = normalizeName(getFull_Name());
+        String b = normalizeName(o.getFull_Name());
         return a.compareToIgnoreCase(b);
     }
 }

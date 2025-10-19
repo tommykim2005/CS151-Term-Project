@@ -1,4 +1,5 @@
 module-info.class
+cs151/application/StudentRepository.class
 cs151/application/StudentListController.class
 cs151/application/AddStudentController.class
 cs151/application/MainController.class
