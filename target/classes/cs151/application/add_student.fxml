@@ -82,11 +82,17 @@
             </children>
         </GridPane>
 
-        <HBox layoutX="24.0" layoutY="600.0" spacing="16">
-            <children>
-                <Button fx:id="saveButton" text="Save" onAction="#saveStudent" prefWidth="120"/>
-                <Button fx:id="backButton" text="Back" onAction="#goBack" prefWidth="120"/>
-            </children>
-        </HBox>
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <children>
+            <Button fx:id="saveButton" text="Save" onAction="#saveStudent" prefWidth="120" defaultButton="true"/>
+            <Button fx:id="backButton" text="Exit" onAction="#goBack" prefWidth="120" cancelButton="true"/>
+        </children>
+        <padding>
+            <Insets top="8" right="16" bottom="8" left="16"/>
+        </padding>
+        <AnchorPane.leftAnchor>0.0</AnchorPane.leftAnchor>
+        <AnchorPane.rightAnchor>0.0</AnchorPane.rightAnchor>
+        <AnchorPane.bottomAnchor>8.0</AnchorPane.bottomAnchor>
+    </HBox>
     </children>
 </AnchorPane>
