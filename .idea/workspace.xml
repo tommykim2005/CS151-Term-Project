@@ -4,8 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="updated add student controller">
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" afterDir="false" />
+    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/languages.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/languages.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/student_data_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp$Language.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp$Language.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +33,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -122,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760851556015</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="a">
+      <option name="closed" value="true" />
+      <created>1760851844123</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760851844123</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,6 +178,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added view student profiles" />
     <MESSAGE value="updated add student controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated add student controller" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
 </project>

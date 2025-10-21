@@ -66,8 +66,14 @@ public class StudentRepository {
                         String.valueOf(whitelist),
                         String.valueOf(blacklist)
                 );
+                boolean empty = false;
+                try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+                    String line = r.readLine();
+                    if(line==null) empty = true;
+                }
+
+                if(!empty) w.newLine();
                 w.write(row);
-                w.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +88,7 @@ public class StudentRepository {
     private static String toCsv(String... cols) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < cols.length; i++) {
-            if (i > 0) sb.append(',');
+            if (i > 0) sb.append('|');
             sb.append(quoteCsv(cols[i]));
         }
         return sb.toString();
@@ -90,7 +96,7 @@ public class StudentRepository {
 
     private static String quoteCsv(String v) {
         if (v == null) return "";
-        boolean needs = v.contains(",") || v.contains("\"") || v.contains("\n") || v.contains("\r");
+        boolean needs = v.contains("|") || v.contains("\"") || v.contains("\n") || v.contains("\r");
         if (!needs) return v;
         return '"' + v.replace("\"", "\"\"") + '"';
     }
@@ -110,7 +116,7 @@ public class StudentRepository {
                     cur.append(ch);
                 }
             } else {
-                if (ch == ',') { out.add(cur.toString()); cur.setLength(0); }
+                if (ch == '|') { out.add(cur.toString()); cur.setLength(0); }
                 else if (ch == '"') inQ = true;
                 else cur.append(ch);
             }

@@ -3,25 +3,28 @@ package cs151.application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.ResourceBundle;
-import java.net.URL;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
-public class StudentListController implements Initializable {
-
+public class StudentSearchController implements Initializable {
     @FXML
     private TableView<Student> table;
 
@@ -55,9 +58,20 @@ public class StudentListController implements Initializable {
     @FXML
     private TableColumn<Student, Boolean> blacklist;
 
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private TextField searchField;
+
     private static final Path FILE = Paths.get("data", "student_data_test.csv");
     private final ObservableList<Student> items = FXCollections.observableArrayList();
-
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
@@ -79,45 +93,57 @@ public class StudentListController implements Initializable {
         blacklist.setEditable(false);
 
         table.setItems(items);
-
-        load();
     }
 
-    private void load() {
+    @FXML
+    public void exitSearchPage()  {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
+    }
 
-        try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+    @FXML
+    public void searchStudent(){
+            CharSequence search = searchField.getText().toLowerCase();
+            table.getItems().clear();
 
-            String line;
+            try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
+                String line;
 
-            while ((line = r.readLine()) != null) {
-                String[] fields = line.split("\\|", -1);
+                while ((line = r.readLine()) != null) {
+                    if(line.toLowerCase().contains(search)) {
 
-                String full_Name = fields[0];
-                String Academic_Status = fields[1];
-                String Current_Job_Status = fields[2];
-                String Job_Details = fields[3];
-                String Programming_Languages = fields[4];
-                String Databases = fields[5];
-                String Preferred_Role = fields[6];
-                String Comments = fields[7];
+                        String[] fields = line.split("\\|", -1);
 
-                boolean Whitelist;
-                Whitelist = fields[8].equalsIgnoreCase("TRUE");
+                        String full_Name = fields[0];
+                        String Academic_Status = fields[1];
+                        String Current_Job_Status = fields[2];
+                        String Job_Details = fields[3];
+                        String Programming_Languages = fields[4];
+                        String Databases = fields[5];
+                        String Preferred_Role = fields[6];
+                        String Comments = fields[7];
 
-                boolean Blacklist;
-                Blacklist = fields[9].equalsIgnoreCase("TRUE");
+                        boolean Whitelist;
+                        Whitelist = fields[8].equalsIgnoreCase("TRUE");
 
-                Student output = new Student(full_Name,Academic_Status,Current_Job_Status,Job_Details,Programming_Languages,Databases,Preferred_Role,Comments,Whitelist,Blacklist);
-                items.add(output);
+                        boolean Blacklist;
+                        Blacklist = fields[9].equalsIgnoreCase("TRUE");
 
+                        Student output = new Student(full_Name, Academic_Status, Current_Job_Status, Job_Details, Programming_Languages, Databases, Preferred_Role, Comments, Whitelist, Blacklist);
+                        items.add(output);
+                        Collections.sort(items);
+                    }
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-
-            Collections.sort(items);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        //return out;
     }
+
+    @FXML
+    public void deleteStudent(){
+
+    }
+
 
 }

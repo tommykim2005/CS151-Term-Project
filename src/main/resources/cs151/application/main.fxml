@@ -11,10 +11,10 @@
                 <Font size="42.0" />
             </font>
         </Label>
-        <Label fx:id="menu_search" layoutX="328.0" layoutY="41.0" text="Search">
+        <Button fx:id="menu_search" layoutX="308.0" layoutY="36.0" text="Search" onAction="#openSearchPage">
             <font>
                 <Font size="15.0" />
-            </font></Label>
+            </font></Button>
         <Button fx:id="menu_studentList" layoutX="386.0" layoutY="36.0" onAction="#switchToStudentList" text="Student's List">
             <font>
                 <Font size="15.0" />

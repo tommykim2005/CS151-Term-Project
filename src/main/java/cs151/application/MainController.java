@@ -20,7 +20,7 @@ public class MainController {
     private Label logo;
 
     @FXML
-    private Label menu_search;
+    private Button menu_search;
 
     @FXML
     private Button menu_studentList;
@@ -48,20 +48,8 @@ public class MainController {
         plStage.setOnHidden(e -> define_programming_language.setDisable(false));
     }
 
-    // Switch scene
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     public void switchToStudentList(ActionEvent event) throws IOException {
-//        root = FXMLLoader.load(getClass().getResource("StudentList.fxml"));
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setTitle("Student List");
-//        scene = new Scene(root);
-//
-//        stage.setScene(scene);
-//        stage.show();
-
         Stage SLstage = new Stage();
         FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
         SLstage.setTitle("Student List");
@@ -73,14 +61,25 @@ public class MainController {
     }
 
     @FXML
-    public void openAddStudentPage(javafx.event.ActionEvent e) throws java.io.IOException {
-        javafx.fxml.FXMLLoader fxml = new javafx.fxml.FXMLLoader(getClass().getResource("add_student.fxml"));
-        javafx.scene.Scene scene = new javafx.scene.Scene(fxml.load());
-        javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) e.getSource()).getScene().getWindow();
+    public void openAddStudentPage(ActionEvent e) throws IOException {
+        FXMLLoader fxml = new FXMLLoader(getClass().getResource("add_student.fxml"));
+        Scene scene = new Scene(fxml.load());
+        Stage stage = (Stage) ((javafx.scene.Node) e.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-        //System.out.println("openAddStudentPage fired");
 
+    }
+
+    @FXML
+    public void openSearchPage() throws IOException{
+        Stage stage = new Stage();
+        FXMLLoader root = new FXMLLoader(getClass().getResource("studentSearch.fxml"));
+        stage.setTitle("Student Search");
+        stage.setScene(new Scene(root.load()));
+        stage.show();
+
+        menu_search.setDisable(true);
+        stage.setOnHidden(e -> menu_search.setDisable(false));
     }
 
 }

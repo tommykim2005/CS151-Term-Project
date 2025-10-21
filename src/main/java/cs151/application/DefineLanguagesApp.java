@@ -14,7 +14,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -162,14 +161,20 @@ public class DefineLanguagesApp extends Application {
     }
 
     private void save(List<Language> langs) {
+        boolean first = true;
+
         try {
             if (!Files.exists(FILE.getParent())) Files.createDirectories(FILE.getParent());
             try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
 
                 for (Language l : langs) {
+                    if(!first){
+                        w.write("\n");
+                    } else {
+                        first = false;
+                    }
                     w.write(csv(l.name.get()));
-                    w.write("\n");
                 }
             }
             info("Saved", "Saved to " + FILE.toString());
