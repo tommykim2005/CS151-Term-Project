@@ -1,4 +1,3 @@
-
 # Name of application: MentorLink
 # Version 0.6
 # who did what:
@@ -19,7 +18,7 @@
 1. Gia Truong - testing
 2. Kobe Deng - programming language sorting
 3. Aarya Chamkeri - testing
-4Thomas Kim - programming language data storage
+4. Thomas Kim - programming language data storage
 
 # Version: 0.2
 # who did what:

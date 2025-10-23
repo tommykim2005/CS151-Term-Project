@@ -103,7 +103,7 @@ public class StudentSearchController implements Initializable {
 
     @FXML
     public void searchStudent(){
-            CharSequence search = searchField.getText().toLowerCase();
+            String search = searchField.getText().toLowerCase();
             table.getItems().clear();
 
             try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
@@ -114,26 +114,16 @@ public class StudentSearchController implements Initializable {
 
                         String[] fields = line.split("\\|", -1);
 
-                        String full_Name = fields[0];
-                        String Academic_Status = fields[1];
-                        String Current_Job_Status = fields[2];
-                        String Job_Details = fields[3];
-                        String Programming_Languages = fields[4];
-                        String Databases = fields[5];
-                        String Preferred_Role = fields[6];
-                        String Comments = fields[7];
+                        boolean Whitelist = fields[8].equalsIgnoreCase("TRUE");
 
-                        boolean Whitelist;
-                        Whitelist = fields[8].equalsIgnoreCase("TRUE");
+                        boolean Blacklist = fields[9].equalsIgnoreCase("TRUE");
 
-                        boolean Blacklist;
-                        Blacklist = fields[9].equalsIgnoreCase("TRUE");
-
-                        Student output = new Student(full_Name, Academic_Status, Current_Job_Status, Job_Details, Programming_Languages, Databases, Preferred_Role, Comments, Whitelist, Blacklist);
+                        Student output = new Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], Whitelist, Blacklist);
                         items.add(output);
-                        Collections.sort(items);
                     }
                 }
+
+                Collections.sort(items);
 
             } catch (IOException ex) {
                 ex.printStackTrace();
