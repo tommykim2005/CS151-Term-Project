@@ -90,7 +90,7 @@ public class StudentListController implements Initializable {
             String line;
 
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split("\\|", -1);
+                String[] fields = line.split(",", -1);
 
                 boolean Whitelist = fields[8].equalsIgnoreCase("TRUE");
 

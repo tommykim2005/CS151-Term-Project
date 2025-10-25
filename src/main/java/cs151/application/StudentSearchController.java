@@ -6,23 +6,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+
 
 public class StudentSearchController implements Initializable {
     @FXML
@@ -112,7 +110,7 @@ public class StudentSearchController implements Initializable {
                 while ((line = r.readLine()) != null) {
                     if(line.toLowerCase().contains(search)) {
 
-                        String[] fields = line.split("\\|", -1);
+                        String[] fields = line.split(",", -1);
 
                         boolean Whitelist = fields[8].equalsIgnoreCase("TRUE");
 
@@ -132,6 +130,32 @@ public class StudentSearchController implements Initializable {
 
     @FXML
     public void deleteStudent(){
+        Student target = table.getSelectionModel().getSelectedItem();
+        table.getItems().remove(target);
+
+        String studentName = target.getFull_Name(); // the name of the student
+        try {
+            Path path = Paths.get("data", "student_data_test.csv");
+            BufferedReader br = Files.newBufferedReader(path);
+            List<String> lines = br.lines().toList();
+            br.close();
+
+            BufferedWriter wr = Files.newBufferedWriter(path);
+
+            for(String line : lines) {
+                String name = line.substring(0, line.indexOf(','));
+                if(!name.equals(studentName)) {
+                    wr.write(line);
+                    wr.newLine();
+                }
+            }
+
+            wr.close();
+            br.close();
+        } catch (IOException e) {
+            // unable to read from file
+        }
+
 
     }
 
