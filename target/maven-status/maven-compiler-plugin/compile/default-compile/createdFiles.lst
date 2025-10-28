@@ -1,9 +1,0 @@
-module-info.class
-cs151/application/StudentRepository.class
-cs151/application/StudentListController.class
-cs151/application/AddStudentController.class
-cs151/application/MainController.class
-cs151/application/DefineLanguagesApp$Language.class
-cs151/application/Main.class
-cs151/application/DefineLanguagesApp.class
-cs151/application/Student.class

@@ -2,9 +2,11 @@ package cs151.application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -58,6 +60,9 @@ public class StudentSearchController implements Initializable {
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private Button editButton;
 
     @FXML
     private Button exitButton;
@@ -155,7 +160,19 @@ public class StudentSearchController implements Initializable {
         } catch (IOException e) {
             // unable to read from file
         }
+    }
 
+    @FXML
+    public void editStudent() throws IOException{
+        //open edit student profile
+
+        //fill fields with old student details
+
+
+        //delete old student
+
+
+        //I'm literally spelling it out, please don't chatgpt it :)
 
     }
 

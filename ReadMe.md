@@ -1,10 +1,18 @@
 # Name of application: MentorLink
-# Version 0.6
+
+# Version 0.7
 # who did what:
 1. Gia Truong - 
-2. Kobe Deng - StudentSearch: search function and UI
+2. Kobe Deng - 
 3. Aarya Chamkeri - 
 4. Thomas Kim - 
+
+# Version 0.6
+# who did what:
+1. Gia Truong - StudentSearch: delete function
+2. Kobe Deng - StudentSearch: search function and UI
+3. Aarya Chamkeri - StudentSearch: delete function
+4. Thomas Kim - testing
 
 # Version 0.5
 # who did what:

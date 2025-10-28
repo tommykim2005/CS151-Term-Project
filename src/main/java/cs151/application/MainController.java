@@ -49,7 +49,7 @@ public class MainController {
     }
 
 
-    public void switchToStudentList(ActionEvent event) throws IOException {
+    public void switchToStudentList() throws IOException {
         Stage SLstage = new Stage();
         FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
         SLstage.setTitle("Student List");
@@ -64,10 +64,9 @@ public class MainController {
     public void openAddStudentPage(ActionEvent e) throws IOException {
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("add_student.fxml"));
         Scene scene = new Scene(fxml.load());
-        Stage stage = (Stage) ((javafx.scene.Node) e.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
