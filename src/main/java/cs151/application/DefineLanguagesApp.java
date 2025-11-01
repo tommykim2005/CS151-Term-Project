@@ -19,7 +19,6 @@ import java.util.List;
 
 public class DefineLanguagesApp extends Application {
     private TextField nameField = new TextField();
-    private TextArea notesField = new TextArea();
 
     private TableView<Language> table = new TableView<>();
     private final ObservableList<Language> data = FXCollections.observableArrayList();
@@ -39,7 +38,6 @@ public class DefineLanguagesApp extends Application {
         topBar.getItems().addAll(title, spacer, loadBtn, saveBtn, exitBtn);
 
         // Form
-        notesField.setPrefRowCount(3);
         GridPane form = new GridPane();
         form.setHgap(10);
         form.setVgap(10);

@@ -52,7 +52,7 @@ public class MainController {
     public void switchToStudentList() throws IOException {
         Stage SLstage = new Stage();
         FXMLLoader root = new FXMLLoader(getClass().getResource("StudentList.fxml"));
-        SLstage.setTitle("Student List");
+        SLstage.setTitle("MentorLink - Student List");
         SLstage.setScene(new Scene(root.load()));
         SLstage.show();
 
@@ -65,6 +65,7 @@ public class MainController {
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("add_student.fxml"));
         Scene scene = new Scene(fxml.load());
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle("MentorLink - Add Student Page");
         stage.setScene(scene);
         stage.show();
     }
@@ -73,7 +74,7 @@ public class MainController {
     public void openSearchPage() throws IOException{
         Stage stage = new Stage();
         FXMLLoader root = new FXMLLoader(getClass().getResource("studentSearch.fxml"));
-        stage.setTitle("Student Search");
+        stage.setTitle("MentorLink - Student Search");
         stage.setScene(new Scene(root.load()));
         stage.show();
 

@@ -156,6 +156,7 @@ public class EditStudentController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentSearch.fxml"));
             Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setTitle("MentorLink - Student Search");
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (IOException e) {
@@ -166,19 +167,6 @@ public class EditStudentController {
     // Helpers
     private static String normalize(String s) { return s == null ? "" : s.trim(); }
     private static String vOf(ComboBox<String> cb) { String v = cb.getValue(); return v == null ? "" : v.trim(); }
-
-    private void clearForm() {
-        fullNameField.clear();
-        academicStatusCombo.getSelectionModel().clearSelection();
-        notEmployedRadio.setSelected(true);
-        jobDetailsField.clear();
-        languagesList.getSelectionModel().clearSelection();
-        databasesList.getSelectionModel().clearSelection();
-        roleCombo.getSelectionModel().clearSelection();
-        commentsArea.clear();
-        whitelistCheck.setSelected(false);
-        blacklistCheck.setSelected(false);
-    }
 
     private void alert(String head, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);

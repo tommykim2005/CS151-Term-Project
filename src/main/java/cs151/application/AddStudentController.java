@@ -152,6 +152,7 @@ public class AddStudentController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
             Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setTitle("MentorLink - Home Page");
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (IOException e) {

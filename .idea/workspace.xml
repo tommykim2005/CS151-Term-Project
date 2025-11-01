@@ -5,38 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added delete function in StudentSearchController">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_32_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_32_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/AddStudentController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/DefineLanguagesApp$Language.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/DefineLanguagesApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/MainController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/StudentListController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_8_56_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_07_PM_[Changes]/MainController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_07_PM_[Changes]/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_07_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_07_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/MainController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/StudentListController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/module-info.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_18_2025_9_40_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/EditStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/EditStudentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/edit_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/edit_student.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +32,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {

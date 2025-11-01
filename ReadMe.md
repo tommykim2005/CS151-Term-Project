@@ -2,10 +2,10 @@
 
 # Version 0.7
 # who did what:
-1. Gia Truong - 
-2. Kobe Deng - 
-3. Aarya Chamkeri - 
-4. Thomas Kim - 
+1. Gia Truong - testing
+2. Kobe Deng - EditStudentController: preset values
+3. Aarya Chamkeri - EditStudentController: save and delete changes
+4. Thomas Kim - EditStudentController: adding to csv
 
 # Version 0.6
 # who did what:

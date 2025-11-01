@@ -147,20 +147,12 @@ public class StudentSearchController implements Initializable {
         Student target = table.getSelectionModel().getSelectedItem();
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("edit_student.fxml"));
         Scene scene = new Scene(fxml.load());
-        EditStudentController editor = fxml.getController();
         Stage stage = (Stage) (editButton).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+
+        EditStudentController editor = fxml.getController();
         editor.preset(target);
-
-        //fill fields with old student details
-
-
-        //delete old student
-
-
-        //I'm literally spelling it out, please don't chatgpt it :)
-
     }
 
 
