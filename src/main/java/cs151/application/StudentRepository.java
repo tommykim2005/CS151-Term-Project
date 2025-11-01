@@ -47,12 +47,15 @@ public class StudentRepository {
             br.close();
 
             BufferedWriter wr = Files.newBufferedWriter(path);
-
+            boolean fline = true;
             for(String line : lines) {
                 String name = line.substring(0, line.indexOf(','));
                 if(!name.equals(studentName)) {
+                    if(!fline) {
+                        wr.newLine();
+                    }
                     wr.write(line);
-                    wr.newLine();
+                    fline = false;
                 }
             }
 
