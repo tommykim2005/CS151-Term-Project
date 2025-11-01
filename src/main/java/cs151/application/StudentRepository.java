@@ -39,6 +39,30 @@ public class StudentRepository {
         return false;
     }
 
+    public static void deleteStudent(String studentName) {
+        try {
+            Path path = Paths.get("data", "student_data_test.csv");
+            BufferedReader br = Files.newBufferedReader(path);
+            List<String> lines = br.lines().toList();
+            br.close();
+
+            BufferedWriter wr = Files.newBufferedWriter(path);
+
+            for(String line : lines) {
+                String name = line.substring(0, line.indexOf(','));
+                if(!name.equals(studentName)) {
+                    wr.write(line);
+                    wr.newLine();
+                }
+            }
+
+            wr.close();
+            br.close();
+        } catch (IOException e) {
+            // unable to read from file
+        }
+    }
+
     /** Append a full 10-column row (Sections 2.1 - 2.4). */
     public static void appendRow(String fullName,
                                  String academicStatus,

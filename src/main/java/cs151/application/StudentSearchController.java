@@ -138,33 +138,20 @@ public class StudentSearchController implements Initializable {
         Student target = table.getSelectionModel().getSelectedItem();
         table.getItems().remove(target);
 
-        String studentName = target.getFull_Name(); // the name of the student
-        try {
-            Path path = Paths.get("data", "student_data_test.csv");
-            BufferedReader br = Files.newBufferedReader(path);
-            List<String> lines = br.lines().toList();
-            br.close();
-
-            BufferedWriter wr = Files.newBufferedWriter(path);
-
-            for(String line : lines) {
-                String name = line.substring(0, line.indexOf(','));
-                if(!name.equals(studentName)) {
-                    wr.write(line);
-                    wr.newLine();
-                }
-            }
-
-            wr.close();
-            br.close();
-        } catch (IOException e) {
-            // unable to read from file
-        }
+        StudentRepository.deleteStudent(target.getFull_Name());
     }
 
     @FXML
     public void editStudent() throws IOException{
         //open edit student profile
+        Student target = table.getSelectionModel().getSelectedItem();
+        FXMLLoader fxml = new FXMLLoader(getClass().getResource("edit_student.fxml"));
+        Scene scene = new Scene(fxml.load());
+        EditStudentController editor = fxml.getController();
+        Stage stage = (Stage) (editButton).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+        editor.preset(target);
 
         //fill fields with old student details
 
