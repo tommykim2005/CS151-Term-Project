@@ -19,9 +19,6 @@
                 <TableColumn fx:id="databases" prefWidth="160.0" text="Databases" />
                 <TableColumn fx:id="preferred_Role" prefWidth="120.0" text="Role" />
 
-                <!-- Section 2.3 -->
-                <TableColumn fx:id="comments" prefWidth="260.0" text="Comments" />
-
                 <!-- Section 2.4 -->
                 <TableColumn fx:id="whitelist" prefWidth="90.0" text="Whitelist" />
                 <TableColumn fx:id="blacklist" prefWidth="90.0" text="Blacklist" />
@@ -43,6 +40,7 @@
       <items>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteStudent" text="Delete" />
             <Button fx:id="editButton" mnemonicParsing="false" onAction="#editStudent" text="Edit" />
+            <Button fx:id="commentButton" mnemonicParsing="false" text="Comments" onAction="#openComment"/>
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitSearchPage" text="Exit" />
       </items>
    </ToolBar>

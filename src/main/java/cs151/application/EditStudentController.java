@@ -35,9 +35,6 @@ public class EditStudentController {
     @FXML private ListView<String> databasesList;
     @FXML private ComboBox<String> roleCombo;
 
-    // 2.3 Faculty Evaluation
-    @FXML private TextArea commentsArea;
-
     // 2.4 Future Services Flags
     @FXML private CheckBox whitelistCheck;
     @FXML private CheckBox blacklistCheck;
@@ -127,12 +124,6 @@ public class EditStudentController {
         if (StudentRepository.existsByName(name)) {
             alert("Duplicate", "A student with the same name already exists."); return;
         }
-        //test
-        String comments = normalize(commentsArea.getText());
-        if (!comments.isEmpty()) {
-            String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
-            comments = today + ": " + comments;
-        }
 
         StudentRepository.appendRow(
                 name,
@@ -142,9 +133,9 @@ public class EditStudentController {
                 String.join(";", selectedLangs),
                 String.join(";", selectedDBs),
                 role,
-                comments,
                 white,
-                black
+                black,
+                ""
         );
 
         alert("Saved", "Student profile saved.");
@@ -203,7 +194,6 @@ public class EditStudentController {
         }
 
         roleCombo.getSelectionModel().select(n.getPreferred_Role());
-        commentsArea.setText(n.getComments());
         whitelistCheck.setSelected(n.isWhitelist());
         blacklistCheck.setSelected(n.isBlacklist());
     }

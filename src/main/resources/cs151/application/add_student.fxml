@@ -60,10 +60,6 @@
                     <Label text="Preferred Professional Role (required):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                     <ComboBox fx:id="roleCombo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                    <Label text="Comments / Journal Entries:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                    <TextArea fx:id="commentsArea" GridPane.rowIndex="7" GridPane.columnIndex="1" prefRowCount="5"
-                              promptText="Add initial comment. (Auto date-stamped on save)"/>
-
                     <Label text="Future Services Flags:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
                     <HBox spacing="20" GridPane.rowIndex="8" GridPane.columnIndex="1">
                         <children>

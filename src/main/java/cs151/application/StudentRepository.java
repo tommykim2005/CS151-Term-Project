@@ -74,9 +74,9 @@ public class StudentRepository {
                                  String programmingLanguages,
                                  String databases,
                                  String preferredRole,
-                                 String comments,
                                  boolean whitelist,
-                                 boolean blacklist) {
+                                 boolean blacklist,
+                                 String comment) {
         try {
             ensureDir();
             try (BufferedWriter w = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8,
@@ -89,9 +89,9 @@ public class StudentRepository {
                         nvl(programmingLanguages),
                         nvl(databases),
                         nvl(preferredRole),
-                        nvl(comments),
                         String.valueOf(whitelist),
-                        String.valueOf(blacklist)
+                        String.valueOf(blacklist),
+                        nvl(comment)
                 );
                 boolean empty = false;
                 try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {

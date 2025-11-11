@@ -83,7 +83,7 @@ public class Student implements Comparable<Student>{
         return this.full_Name;
     }
 
-    public Student(String full_Name, String academic_Status, String current_Job_Status, String job_Details, String programming_Languages, String databases, String preferred_Role, String comments, Boolean whitelist, Boolean blacklist) {
+    public Student(String full_Name, String academic_Status, String current_Job_Status, String job_Details, String programming_Languages, String databases, String preferred_Role, Boolean whitelist, Boolean blacklist, String comments) {
         this.full_Name = full_Name;
         this.academic_Status = academic_Status;
         this.current_Job_Status = current_Job_Status;

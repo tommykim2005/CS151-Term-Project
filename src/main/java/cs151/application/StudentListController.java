@@ -47,9 +47,6 @@ public class StudentListController implements Initializable {
     private TableColumn<Student, String> programming_Languages;
 
     @FXML
-    private TableColumn<Student, String> comments;
-
-    @FXML
     private TableColumn<Student, Boolean> whitelist;
 
     @FXML
@@ -69,7 +66,6 @@ public class StudentListController implements Initializable {
         programming_Languages.setCellValueFactory(new PropertyValueFactory<>("programming_Languages"));
         databases.setCellValueFactory(new PropertyValueFactory<>("databases"));
         preferred_Role.setCellValueFactory(new PropertyValueFactory<>("preferred_Role"));
-        comments.setCellValueFactory(new PropertyValueFactory<>("comments"));
         whitelist.setCellValueFactory(new PropertyValueFactory<>("whitelist"));
         whitelist.setCellFactory(CheckBoxTableCell.forTableColumn(whitelist));
         whitelist.setEditable(false);
@@ -92,11 +88,11 @@ public class StudentListController implements Initializable {
             while ((line = r.readLine()) != null) {
                 String[] fields = line.split(",", -1);
 
-                boolean Whitelist = fields[8].equalsIgnoreCase("TRUE");
+                boolean Whitelist = fields[7].equalsIgnoreCase("TRUE");
 
-                boolean Blacklist = fields[9].equalsIgnoreCase("TRUE");
+                boolean Blacklist = fields[8].equalsIgnoreCase("TRUE");
 
-                Student output = new Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], Whitelist, Blacklist);
+                Student output = new Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], Whitelist, Blacklist, fields[9]);
                 items.add(output);
             }
 
