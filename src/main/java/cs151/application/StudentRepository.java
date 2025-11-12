@@ -3,9 +3,9 @@ package cs151.application;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class StudentRepository {
 
@@ -37,6 +37,63 @@ public class StudentRepository {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String[] getRowByName(String targetName) {
+        try (BufferedReader br = new BufferedReader(new FileReader("student_data_test.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split(",");
+                if (columns.length >= 1 && columns[0].trim().equalsIgnoreCase(targetName.trim())) {
+                    return columns;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void writeComment(String name, String comment) {
+        String csvPath = "student_data_test.csv";
+        List<String> lines = new ArrayList<>();
+        boolean updated = false;
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvPath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] cols = line.split(",", -1);
+                if (cols.length > 0 && cols[0].trim().equalsIgnoreCase(name.trim())) {
+                    if (cols.length < 8) cols = Arrays.copyOf(cols, 8);
+                    String existing = cols[7] == null ? "" : cols[7];
+                    cols[7] = existing + " | " + LocalDateTime.now().format(fmt) + "    " + comment;
+                    line = String.join(",", cols);
+                    updated = true;
+                }
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if (!updated) {
+            String[] newRow = new String[] {
+                    name, "", "", "", "", "", "",
+                    LocalDateTime.now().format(fmt) + "    " + comment
+            };
+            lines.add(String.join(",", newRow));
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvPath))) {
+            for (String l : lines) {
+                bw.write(l);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void deleteStudent(String studentName) {
