@@ -55,7 +55,6 @@ public class StudentListController implements Initializable {
     private static final Path FILE = Paths.get("data", "student_data_test.csv");
     private final ObservableList<Student> items = FXCollections.observableArrayList();
 
-
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
 

@@ -5,25 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddCommentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/addComment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddStudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/EditStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/EditStudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/add_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/add_student.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/edit_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/edit_student.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp$Language.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp$Language.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentList.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +29,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {

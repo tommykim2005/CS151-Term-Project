@@ -144,6 +144,7 @@ public class StudentSearchController implements Initializable {
     public void editStudent() throws IOException{
         //open edit student profile
         Student target = table.getSelectionModel().getSelectedItem();
+        if(target!=null) {
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("edit_student.fxml"));
         Scene scene = new Scene(fxml.load());
         Stage stage = (Stage) (editButton).getScene().getWindow();
@@ -152,11 +153,23 @@ public class StudentSearchController implements Initializable {
 
         EditStudentController editor = fxml.getController();
         editor.preset(target);
+        }
     }
 
     @FXML
-    public void openComment(){
+    public void openComment() throws IOException{
+        Student target = table.getSelectionModel().getSelectedItem();
+        if(target!=null) {
+            FXMLLoader fxml = new FXMLLoader(getClass().getResource("addComment.fxml"));
+            Scene scene = new Scene(fxml.load());
+            Stage stage = (Stage) (editButton).getScene().getWindow();
+            stage.setTitle("MentorLink - View Comments");
+            stage.setScene(scene);
+            stage.show();
 
+            AddCommentController comment = fxml.getController();
+            comment.preset(target);
+        }
     }
 
 
