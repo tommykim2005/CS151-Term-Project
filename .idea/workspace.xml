@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="Adds AddCommentController" />
+    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/student_data_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddCommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddCommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/AddStudentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp$Language.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/DefineLanguagesApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/EditStudentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/MainController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentList.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentListController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentSearch.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/StudentSearchController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/add_student.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/edit_student.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cs151/application/main.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -169,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762931858921</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="a">
+      <option name="closed" value="true" />
+      <created>1762932151883</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762932151883</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,8 +229,8 @@
     <MESSAGE value="updated add student controller" />
     <MESSAGE value="added StudentSearch and fixed an issue regarding .csv files having unwanted newlines" />
     <MESSAGE value="added delete function in StudentSearchController" />
-    <MESSAGE value="a" />
     <MESSAGE value="Adds AddCommentController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds AddCommentController" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
 </project>

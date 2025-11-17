@@ -112,7 +112,6 @@ public class AddCommentController {
 
     public void writeComment(String name, String comment) {
         List<String> lines = new ArrayList<>();
-        boolean updated = false;
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         try (BufferedReader br = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
@@ -132,10 +131,17 @@ public class AddCommentController {
             return;
         }
 
+        boolean first = true;
+
         try (BufferedWriter bw = Files.newBufferedWriter(FILE, StandardCharsets.UTF_8)) {
             for (String l : lines) {
+                if(first){
+                    first = false;
+                } else {
+                    bw.newLine();
+                }
                 bw.write(l);
-                bw.newLine();
+
             }
         } catch (IOException e) {
             e.printStackTrace();

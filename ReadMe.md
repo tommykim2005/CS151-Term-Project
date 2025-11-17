@@ -1,5 +1,12 @@
 # Name of application: MentorLink
 
+# Version 0.8
+# who did what:
+1. Gia Truong - AddCommentController: all other functions
+2. Kobe Deng - AddCommentController:  all other function
+3. Aarya Chamkeri - AddCommentController: writeComment method
+4. Thomas Kim - testing
+
 # Version 0.7
 # who did what:
 1. Gia Truong - testing
