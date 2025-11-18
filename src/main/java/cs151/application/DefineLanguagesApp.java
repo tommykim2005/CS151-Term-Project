@@ -90,7 +90,7 @@ public class DefineLanguagesApp extends Application {
             nameField.setText(sel.name.get());
         });
 
-        stage.setScene(new Scene(root, 800, 540));
+        stage.setScene(new Scene(root, 860, 640));
         stage.setTitle("MentorLink - Define Programming Languages");
         stage.show();
     }

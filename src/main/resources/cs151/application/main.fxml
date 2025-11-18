@@ -4,26 +4,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="712.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.MainController">
-    <children>
-        <Label fx:id="logo" layoutX="40.0" layoutY="20.0" text="MentorLink">
-            <font>
-                <Font size="42.0" />
-            </font>
-        </Label>
-        <Button fx:id="menu_search" layoutX="426.0" layoutY="36.0" onAction="#openSearchPage" text="Search">
-            <font>
-                <Font size="15.0" />
-            </font></Button>
-        <Button fx:id="menu_studentList" layoutX="502.0" layoutY="36.0" onAction="#openStudentListPage" text="Student's List">
-            <font>
-                <Font size="15.0" />
-            </font></Button>
-        <Button fx:id="menu_report" layoutX="623.0" layoutY="36.0" text="Report" onAction="#openReportPage">
-            <font>
-                <Font size="15.0" />
-            </font></Button>
-        <Button fx:id="define_programming_language" alignment="CENTER" contentDisplay="CENTER" layoutX="182.0" layoutY="164.0" mnemonicParsing="false" onAction="#programming_language_click" prefHeight="87.0" prefWidth="322.0" text="Define new programming language" />
-        <Button fx:id="create_student" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="293.0" mnemonicParsing="false" onAction="#openAddStudentPage" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" />
-    </children>
+<AnchorPane prefHeight="640.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.MainController">
+    <Label fx:id="logo" layoutX="40.0" layoutY="20.0" text="MentorLink">
+        <font>
+            <Font size="42.0"/>
+        </font>
+    </Label>
+    <Button fx:id="menu_search" layoutX="546.0" layoutY="35.0" onAction="#openSearchPage" text="Search">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Button>
+    <Button fx:id="menu_studentList" layoutX="626.0" layoutY="35.0" onAction="#openStudentListPage"
+            text="Student's List">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Button>
+    <Button fx:id="menu_report" layoutX="749.0" layoutY="35.0" onAction="#openReportPage" text="Report">
+        <font>
+            <Font size="15.0"/>
+        </font>
+    </Button>
+    <Button fx:id="define_programming_language" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0"
+            layoutY="158.0" mnemonicParsing="false" onAction="#programming_language_click" prefHeight="87.0"
+            prefWidth="322.0" text="Define new programming language"/>
+    <Button fx:id="create_student" alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="311.0"
+            mnemonicParsing="false" onAction="#openAddStudentPage" prefHeight="87.0" prefWidth="322.0"
+            text="Create new student profile"/>
 </AnchorPane>

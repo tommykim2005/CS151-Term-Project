@@ -1,12 +1,8 @@
 package cs151.application;
 
-import cs151.application.DefineLanguagesApp;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,7 +30,6 @@ public class MainController {
     @FXML
     private Button create_student;
 
-    // opens a new scene for that asks the user to define a programming language
     @FXML
     private void programming_language_click(ActionEvent e) {
         cs151.application.DefineLanguagesApp.open(e);
@@ -53,7 +48,7 @@ public class MainController {
         Stage stage = (Stage) create_student.getScene().getWindow();
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("add_student.fxml"));
         Scene scene = new Scene(fxml.load());
-        stage.setTitle("MentorLink - Add Student Page");
+        stage.setTitle("MentorLink - Add Student");
         stage.setScene(scene);
         stage.show();
     }
@@ -65,14 +60,15 @@ public class MainController {
         stage.setTitle("MentorLink - Student Search");
         stage.setScene(new Scene(root.load()));
         stage.show();
-
-        menu_search.setDisable(true);
-        stage.setOnHidden(e -> menu_search.setDisable(false));
     }
 
     @FXML
-    public void openReportPage(){
-
+    public void openReportPage() throws IOException{
+        Stage stage = (Stage) menu_report.getScene().getWindow();
+        FXMLLoader root = new FXMLLoader(getClass().getResource("Report.fxml"));
+        stage.setTitle("MentorLink - Student Report");
+        stage.setScene(new Scene(root.load()));
+        stage.show();
     }
 
 }

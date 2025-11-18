@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
+    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added Report.fxml and ReportController">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/Report.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/DefineLanguagesApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/addComment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/addComment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -193,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763423777249</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="a">
+      <option name="closed" value="true" />
+      <created>1763428333604</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763428333604</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -226,6 +235,7 @@
     <MESSAGE value="added delete function in StudentSearchController" />
     <MESSAGE value="Adds AddCommentController" />
     <MESSAGE value="a" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <MESSAGE value="added Report.fxml and ReportController" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Report.fxml and ReportController" />
   </component>
 </project>

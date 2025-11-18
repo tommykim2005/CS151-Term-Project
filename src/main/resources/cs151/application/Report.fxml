@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="640.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.ReportController">
+
+    <center>
+        <TableView fx:id="table">
+            <columns>
+                <TableColumn fx:id="full_Name" prefWidth="220.0" text="Full Name" />
+                <TableColumn fx:id="academic_Status" prefWidth="160.0" text="Academic Status" />
+                <TableColumn fx:id="current_Job_Status" prefWidth="140.0" text="Job Status" />
+                <TableColumn fx:id="job_Details" prefWidth="220.0" text="Job Details" />
+
+                <!-- Section 2.2 -->
+                <TableColumn fx:id="programming_Languages" prefWidth="160.0" text="Languages" />
+                <TableColumn fx:id="databases" prefWidth="160.0" text="Databases" />
+                <TableColumn fx:id="preferred_Role" prefWidth="120.0" text="Role" />
+
+                <!-- Section 2.4 -->
+                <TableColumn fx:id="whitelist" prefWidth="90.0" text="Whitelist" />
+                <TableColumn fx:id="blacklist" prefWidth="90.0" text="Blacklist" />
+            </columns>
+
+        </TableView>
+    </center>
+    <top>
+        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student Reports"/>
+            <RadioButton fx:id="WhiteList" mnemonicParsing="false" text="WhiteList" toggleGroup="$serviceFlag"/>
+            <RadioButton fx:id="BlackList" mnemonicParsing="false" text="BlackList" toggleGroup="$serviceFlag"/>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" text="Exit"/>
+        </HBox>
+    </top>
+
+
+</BorderPane>
