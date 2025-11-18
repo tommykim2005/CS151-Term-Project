@@ -11,22 +11,18 @@
                 <Font size="42.0" />
             </font>
         </Label>
-        <Button fx:id="menu_search" layoutX="308.0" layoutY="36.0" text="Search" onAction="#openSearchPage">
+        <Button fx:id="menu_search" layoutX="426.0" layoutY="36.0" onAction="#openSearchPage" text="Search">
             <font>
                 <Font size="15.0" />
             </font></Button>
-        <Button fx:id="menu_studentList" layoutX="386.0" layoutY="36.0" onAction="#switchToStudentList" text="Student's List">
+        <Button fx:id="menu_studentList" layoutX="502.0" layoutY="36.0" onAction="#openStudentListPage" text="Student's List">
             <font>
                 <Font size="15.0" />
             </font></Button>
-        <Label fx:id="menu_studentProfile" layoutX="506.0" layoutY="41.0" text="Student's profile">
+        <Button fx:id="menu_report" layoutX="623.0" layoutY="36.0" text="Report" onAction="#openReportPage">
             <font>
                 <Font size="15.0" />
-            </font></Label>
-        <Label fx:id="menu_report" layoutX="635.0" layoutY="41.0" text="Report">
-            <font>
-                <Font size="15.0" />
-            </font></Label>
+            </font></Button>
         <Button fx:id="define_programming_language" alignment="CENTER" contentDisplay="CENTER" layoutX="182.0" layoutY="164.0" mnemonicParsing="false" onAction="#programming_language_click" prefHeight="87.0" prefWidth="322.0" text="Define new programming language" />
         <Button fx:id="create_student" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="293.0" mnemonicParsing="false" onAction="#openAddStudentPage" prefHeight="87.0" prefWidth="322.0" text="Create new student profile" />
     </children>

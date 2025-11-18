@@ -3,11 +3,15 @@ package cs151.application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -51,6 +55,9 @@ public class StudentListController implements Initializable {
 
     @FXML
     private TableColumn<Student, Boolean> blacklist;
+
+    @FXML
+    private Button exitButton;
 
     private static final Path FILE = Paths.get("data", "student_data_test.csv");
     private final ObservableList<Student> items = FXCollections.observableArrayList();
@@ -101,6 +108,14 @@ public class StudentListController implements Initializable {
             ex.printStackTrace();
         }
         //return out;
+    }
+
+    public void exit() throws IOException{
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        FXMLLoader root = new FXMLLoader(getClass().getResource("main.fxml"));
+        stage.setTitle("MentorLink - Home Page");
+        stage.setScene(new Scene(root.load()));
+        stage.show();
     }
 
 }

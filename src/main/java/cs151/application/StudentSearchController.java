@@ -98,9 +98,12 @@ public class StudentSearchController implements Initializable {
     }
 
     @FXML
-    public void exitSearchPage()  {
+    public void exitSearchPage() throws IOException{
         Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.close();
+        FXMLLoader root = new FXMLLoader(getClass().getResource("main.fxml"));
+        stage.setTitle("MentorLink - Home Page");
+        stage.setScene(new Scene(root.load()));
+        stage.show();
     }
 
     @FXML

@@ -2,30 +2,36 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cs151.application.StudentListController"
-            prefWidth="800.0" prefHeight="520.0">
+<BorderPane prefHeight="520.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.StudentListController">
 
     <center>
         <TableView fx:id="table">
 <columns>
-    <TableColumn fx:id="full_Name" text="Full Name" prefWidth="220.0"/>
-    <TableColumn fx:id="academic_Status" text="Academic Status" prefWidth="160.0"/>
-    <TableColumn fx:id="current_Job_Status" text="Job Status" prefWidth="140.0"/>
-    <TableColumn fx:id="job_Details" text="Job Details" prefWidth="220.0"/>
+    <TableColumn fx:id="full_Name" prefWidth="220.0" text="Full Name" />
+    <TableColumn fx:id="academic_Status" prefWidth="160.0" text="Academic Status" />
+    <TableColumn fx:id="current_Job_Status" prefWidth="140.0" text="Job Status" />
+    <TableColumn fx:id="job_Details" prefWidth="220.0" text="Job Details" />
 
     <!-- Section 2.2 -->
-    <TableColumn fx:id="programming_Languages" text="Languages" prefWidth="160.0"/>
-    <TableColumn fx:id="databases" text="Databases" prefWidth="160.0"/>
-    <TableColumn fx:id="preferred_Role" text="Role" prefWidth="120.0"/>
+    <TableColumn fx:id="programming_Languages" prefWidth="160.0" text="Languages" />
+    <TableColumn fx:id="databases" prefWidth="160.0" text="Databases" />
+    <TableColumn fx:id="preferred_Role" prefWidth="120.0" text="Role" />
 
     <!-- Section 2.4 -->
-    <TableColumn fx:id="whitelist" text="Whitelist" prefWidth="90.0"/>
-    <TableColumn fx:id="blacklist" text="Blacklist" prefWidth="90.0"/>
+    <TableColumn fx:id="whitelist" prefWidth="90.0" text="Whitelist" />
+    <TableColumn fx:id="blacklist" prefWidth="90.0" text="Blacklist" />
 </columns>
 
         </TableView>
     </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student List" textAlignment="CENTER" />
+            <Button fx:id="exitButton" mnemonicParsing="false" text="Exit" onAction="#exit"/>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

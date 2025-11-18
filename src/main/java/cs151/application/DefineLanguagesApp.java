@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -80,7 +83,7 @@ public class DefineLanguagesApp extends Application {
         });
         saveBtn.setOnAction(e -> save(new ArrayList<>(data)));
 
-        exitBtn.setOnAction(e -> stage.close());
+        exitBtn.setOnAction(e -> close(e));
 
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, sel) -> {
             if (sel == null) return;
@@ -105,8 +108,8 @@ public class DefineLanguagesApp extends Application {
         clearForm();
     }
 
-    public static Stage open() {
-        Stage stage = new Stage();
+    public static Stage open(ActionEvent e) {
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         javafx.application.Platform.runLater(() -> {
             try {
                 new DefineLanguagesApp().start(stage);
@@ -115,6 +118,18 @@ public class DefineLanguagesApp extends Application {
             }
         });
         return stage;
+    }
+
+    public void close(ActionEvent e) {
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        try {
+            FXMLLoader root = new FXMLLoader(getClass().getResource("main.fxml"));
+            stage.setTitle("MentorLink - Home Page");
+            stage.setScene(new Scene(root.load()));
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void updateLanguage() {
