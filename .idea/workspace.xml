@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added Report.fxml and ReportController">
+    <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/PopupStudentProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/PopupStudentProfileController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +16,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -204,7 +204,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763435492381</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added comment popup function">
+      <option name="closed" value="true" />
+      <created>1763770245637</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763770245637</updated>
+    </task>
+    <task id="LOCAL-00015" summary="a">
+      <option name="closed" value="true" />
+      <created>1763770387218</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763770387218</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -236,8 +252,9 @@
     <MESSAGE value="added StudentSearch and fixed an issue regarding .csv files having unwanted newlines" />
     <MESSAGE value="added delete function in StudentSearchController" />
     <MESSAGE value="Adds AddCommentController" />
-    <MESSAGE value="a" />
     <MESSAGE value="added Report.fxml and ReportController" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Report.fxml and ReportController" />
+    <MESSAGE value="added comment popup function" />
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
 </project>

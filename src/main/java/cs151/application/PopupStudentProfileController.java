@@ -42,6 +42,36 @@ public class PopupStudentProfileController {
         commentText.setCellValueFactory(new PropertyValueFactory<>("comment"));
         commentsTable.setItems(comments);
 
+        // Enable resizing of table columns
+        commentsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        // Set Proportions of columns:
+        // Date gets 25% of width, Comment gets 75%
+        dateAdded.prefWidthProperty().bind(commentsTable.widthProperty().multiply(0.25));
+        commentText.prefWidthProperty().bind(commentsTable.widthProperty().multiply(0.75));
+
+        dateAdded.setMinWidth(100);
+        commentText.setMaxWidth(500);
+
+        commentText.setCellFactory(tc -> new TableCell<comment, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setTooltip(null);
+                } else {
+                    // A. Set the text
+                    setText(item);
+
+                    // B. FORCE the ellipsis (...)
+                    setTextOverrun(OverrunStyle.ELLIPSIS);
+                    setWrapText(false); // Ensure it stays on one line
+
+                }
+            }
+        });
+
     }
 
     public void loadStudentData(String studentName) {
