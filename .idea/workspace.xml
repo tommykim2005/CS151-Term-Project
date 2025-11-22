@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="added Report.fxml and ReportController">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/Report.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentList.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/StudentSearch.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/addComment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/addComment.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cs151/application/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763428333604</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added Report.fxml and ReportController">
+      <option name="closed" value="true" />
+      <created>1763435492381</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763435492381</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

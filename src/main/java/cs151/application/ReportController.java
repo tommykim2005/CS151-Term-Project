@@ -5,10 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -102,6 +104,18 @@ public class ReportController implements Initializable {
         table.setItems(items);
 
         load();
+
+        table.setRowFactory(tv -> {
+            TableRow<Student> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                // Check for double-click AND ensure the row is not empty
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Student selectedStudent = row.getItem();
+                    openPopup(selectedStudent);
+                }
+            });
+            return row;
+        });
     }
 
     private void load() {
@@ -162,5 +176,31 @@ public class ReportController implements Initializable {
         stage.setTitle("MentorLink - Home Page");
         stage.setScene(new Scene(root.load()));
         stage.show();
+    }
+
+    private void openPopup(Student student) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("popup_student_profile.fxml"));
+            Parent root = loader.load();
+
+            PopupStudentProfileController controller = loader.getController();
+
+            controller.loadStudentData(student.getFull_Name());
+
+            Stage stage = new Stage();
+            if (table.getScene() != null) {
+                stage.initOwner(table.getScene().getWindow());
+            }
+
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            stage.setTitle("Student Profile: " + student.getFull_Name());
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

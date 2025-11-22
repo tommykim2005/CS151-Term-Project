@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs151.application.PopupStudentProfileController">
+   <children>
+      <Label layoutX="26.0" layoutY="13.0" prefHeight="17.0" prefWidth="140.0" text="Full name">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="39.0" prefHeight="17.0" prefWidth="140.0" text="Academic status">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="64.0" prefHeight="17.0" prefWidth="140.0" text="Job Status">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="89.0" prefHeight="17.0" prefWidth="140.0" text="Job Details">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="113.0" prefHeight="17.0" prefWidth="140.0" text="Languages">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="138.0" prefHeight="17.0" prefWidth="140.0" text="Databases">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="162.0" prefHeight="21.0" prefWidth="62.0" text="Role">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TableView fx:id="commentsTable" layoutY="193.0" prefHeight="208.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="dateAdded" prefWidth="86.39999544620514" resizable="false" text="Date" />
+            <TableColumn fx:id="commentText" prefWidth="509.60005950927734" text="Comment" />
+         </columns>
+      </TableView>
+      <TextField fx:id="full_name" editable="false" layoutX="359.0" layoutY="10.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="academicStatus" editable="false" layoutX="359.0" layoutY="36.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="jobStatus" editable="false" layoutX="359.0" layoutY="61.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="jobDetail" editable="false" layoutX="359.0" layoutY="86.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="languages" editable="false" layoutX="359.0" layoutY="111.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="databases" editable="false" layoutX="359.0" layoutY="136.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="role" editable="false" layoutX="359.0" layoutY="161.0" prefHeight="26.0" prefWidth="175.0" />
+   </children>
+</AnchorPane>
