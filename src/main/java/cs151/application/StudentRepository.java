@@ -130,7 +130,7 @@ public class StudentRepository {
     private static String toCsv(String... cols) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < cols.length; i++) {
-            if (i > 0) sb.append(",,");
+            if (i > 0) sb.append(",");
             sb.append(quoteCsv(cols[i]));
         }
         return sb.toString();
@@ -138,7 +138,7 @@ public class StudentRepository {
 
     private static String quoteCsv(String v) {
         if (v == null) return "";
-        boolean needs = v.contains(",,") || v.contains("\"") || v.contains("\n") || v.contains("\r");
+        boolean needs = v.contains(",") || v.contains("\"") || v.contains("\n") || v.contains("\r");
         if (!needs) return v;
         return '"' + v.replace("\"", "\"\"") + '"';
     }

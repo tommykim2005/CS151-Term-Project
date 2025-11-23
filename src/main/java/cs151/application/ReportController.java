@@ -125,7 +125,7 @@ public class ReportController implements Initializable {
             String line;
 
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",,", -1);
+                String[] fields = line.split(",", -1);
 
                 boolean Whitelist = fields[7].equalsIgnoreCase("TRUE");
 
@@ -150,7 +150,7 @@ public class ReportController implements Initializable {
             String line; Student output;
 
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",,", -1);
+                String[] fields = line.split(",", -1);
 
                 boolean Whitelist = fields[7].equalsIgnoreCase("TRUE");
 

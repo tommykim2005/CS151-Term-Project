@@ -100,7 +100,7 @@ public class PopupStudentProfileController {
         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",,", -1);
+                String[] fields = line.split(",", -1);
 
                 if (fields.length > 1 && fields[0].trim().equalsIgnoreCase(studentName)) {
 
@@ -124,12 +124,13 @@ public class PopupStudentProfileController {
         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",,", -1);
+                String[] fields = line.split(",", -1);
 
                 if (fields.length > 0 && fields[0].contains(studentName)) {
                     // Safety check: ensure line has enough columns
                     if (fields.length > 9) {
                         String commentBlock = fields[9];
+                        commentBlock = commentBlock.replace("///", ",");
 
                         // Splitting custom format "date:: comment|||date:: comment"
                         String[] entries = commentBlock.split("\\|\\|\\|");

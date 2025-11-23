@@ -71,9 +71,10 @@ public class AddCommentController {
 
     public void save(){
         String comment = input.getText();
-        writeComment(name.getText(), comment);
-
-        input.clear();
+        if(!comment.isEmpty()) {
+            writeComment(name.getText(), comment);
+            input.clear();
+        }
     }
 
     public void preset(Student x){
@@ -88,7 +89,7 @@ public class AddCommentController {
 
             while ((line = r.readLine()) != null) {
 
-                    String[] fields = line.split(",,", -1);
+                    String[] fields = line.split(",", -1);
 
                     if(fields[0].contains(x.getFull_Name())) {
                         String comment = fields[9];
@@ -114,17 +115,18 @@ public class AddCommentController {
         List<String> lines = new ArrayList<>();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-
+        comment = comment.replace("\n", " ");
+        comment = comment.replace(",","///");
 
         try (BufferedReader br = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] cols = line.split(",,", -1);
+                String[] cols = line.split(",", -1);
                 if (cols.length > 0 && cols[0].trim().equalsIgnoreCase(name.trim())) {
                     if (cols.length < 10) cols = Arrays.copyOf(cols, 10);
                     String existing = cols[9] == null ? "" : cols[9];
                     cols[9] = existing + "|||" + LocalDateTime.now().format(fmt) + ":: " + comment;
-                    line = String.join(",,", cols);
+                    line = String.join(",", cols);
                 }
                 lines.add(line);
             }
