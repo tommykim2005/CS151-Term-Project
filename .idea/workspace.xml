@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fb8eb05-a9d9-40a4-8393-f8736240f3fa" name="Changes" comment="a">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/AddCommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/AddCommentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/PopupStudentProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/PopupStudentProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/ReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cs151/application/StudentSearchController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763872729391</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="a">
+      <option name="closed" value="true" />
+      <created>1763873620743</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763873620743</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

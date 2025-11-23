@@ -131,6 +131,7 @@ public class PopupStudentProfileController {
                     if (fields.length > 9) {
                         String commentBlock = fields[9];
                         commentBlock = commentBlock.replace("///", ",");
+                        commentBlock = commentBlock.replace("====", "\n");
 
                         // Splitting custom format "date:: comment|||date:: comment"
                         String[] entries = commentBlock.split("\\|\\|\\|");

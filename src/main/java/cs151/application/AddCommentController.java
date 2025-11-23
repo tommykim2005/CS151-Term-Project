@@ -98,7 +98,8 @@ public class AddCommentController {
 
                         for(int i = 1; i < fields.length; i++){
                             temp = fields[i].split(":: ");
-                            //comment c = new comment(temp[0], temp[1]);
+                            temp[1] = temp[1].replace("///", ",");
+                            temp[1] = temp[1].replace("====", "\n");
                             comment c = new comment(temp[0],temp[1]);
                             items.add(c);
                         }
@@ -115,7 +116,10 @@ public class AddCommentController {
         List<String> lines = new ArrayList<>();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        comment = comment.replace("\n", " ");
+        comment c = new comment(LocalDateTime.now().format(fmt),comment);
+        items.add(c);
+
+        comment = comment.replace("\n", "====");
         comment = comment.replace(",","///");
 
         try (BufferedReader br = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
@@ -151,8 +155,6 @@ public class AddCommentController {
             e.printStackTrace();
         }
 
-        comment c = new comment(LocalDateTime.now().format(fmt),comment);
-        items.add(c);
     }
 
 
