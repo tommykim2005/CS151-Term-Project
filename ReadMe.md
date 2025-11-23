@@ -1,5 +1,12 @@
 # Name of application: MentorLink
 
+# Version 0.9
+# who did what:
+1. Gia Truong - PopupStudentProfileController and popup_student_profile.fxml
+2. Kobe Deng - ReportController and Report.fxml
+3. Aarya Chamkeri - 
+4. Thomas Kim - 
+
 # Version 0.8
 # who did what:
 1. Gia Truong - AddCommentController: all other functions

@@ -72,6 +72,21 @@ public class PopupStudentProfileController {
             }
         });
 
+        commentsTable.setRowFactory(tv -> {
+            TableRow<comment> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() ) {
+                    comment selected = row.getItem();
+                    Alert a = new Alert(Alert.AlertType.NONE, selected.getComment(), ButtonType.CLOSE);
+                    a.setResizable(true);
+                    a.setHeight(300);
+                    a.setHeaderText(selected.getDate());
+                    a.showAndWait();
+                }
+            });
+            return row;
+        });
+
     }
 
     public void loadStudentData(String studentName) {
@@ -85,7 +100,7 @@ public class PopupStudentProfileController {
         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",", -1);
+                String[] fields = line.split(",,", -1);
 
                 if (fields.length > 1 && fields[0].trim().equalsIgnoreCase(studentName)) {
 
@@ -109,7 +124,7 @@ public class PopupStudentProfileController {
         try (BufferedReader r = Files.newBufferedReader(FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = r.readLine()) != null) {
-                String[] fields = line.split(",", -1);
+                String[] fields = line.split(",,", -1);
 
                 if (fields.length > 0 && fields[0].contains(studentName)) {
                     // Safety check: ensure line has enough columns

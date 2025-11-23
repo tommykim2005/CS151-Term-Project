@@ -117,7 +117,7 @@ public class StudentSearchController implements Initializable {
                 while ((line = r.readLine()) != null) {
                     if(line.toLowerCase().contains(search)) {
 
-                        String[] fields = line.split(",", -1);
+                        String[] fields = line.split(",,", -1);
 
                         boolean Whitelist = fields[7].equalsIgnoreCase("TRUE");
 
